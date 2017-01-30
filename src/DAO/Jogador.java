@@ -5,6 +5,8 @@
  */
 package DAO;
 
+import java.util.List;
+
 /**
  *
  * @author Kevin Levrone
@@ -13,6 +15,16 @@ public class Jogador {
     private String nome;
     private int num;
     private String cor;
+    private List<Territorio> territorios;
+    private int continentes;
+
+    public void setContinentes(int continentes) {
+        this.continentes = continentes;
+    }
+
+    public int getContinentes() {
+        return continentes;
+    }
 
     public Jogador(){    
     }
@@ -45,6 +57,14 @@ public class Jogador {
     
     public void setCor(String cor){
         this.cor = cor;
+    }
+    
+    public List<Territorio> getTerritorios(){
+        return territorios;
+    }
+    
+    public void setTerritorios(List<Territorio> territorios){
+        this.territorios = territorios;
     }
     
 }

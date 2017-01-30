@@ -10,12 +10,8 @@ package DAO;
  * @author Kevin Levrone
  */
 public class Continente {
-    /*private String AFRICA;
-    private String AMERICA_DO_NORTE;
-    private String AMERICA_DO_SUL;
-    private String ASIA;
-    private String EUROPA;
-    private String OCEANIA;*/
+    private int num_territorios;
+    
     public enum continentes{
         AFRICA,AMERICA_DO_NORTE, AMERICA_DO_SUL, ASIA, EUROPA, OCEANIA;
     }
