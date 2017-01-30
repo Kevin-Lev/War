@@ -6,8 +6,10 @@
 package war;
 
 import DAO.Continente;
+import DAO.Jogador;
 import DAO.Territorio;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,44 +23,50 @@ public class War {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
+        List<Territorio> Total_ter = new ArrayList();
 /////////////////////// América do Norte////////////////////////////////
 
         Territorio al = new Territorio();
         al.setNome("Alasca");
         al.setCor("amarelo");
         al.setContinente(Continente.continentes.AMERICA_DO_NORTE);
-       
+        Total_ter.add(al);
+        
         Territorio van = new Territorio();
         van.setNome("Vancouver");
         van.setCor("amarelo");
         van.setContinente(Continente.continentes.AMERICA_DO_NORTE);
-      
+        Total_ter.add(van);
         
         Territorio cal = new Territorio();
         cal.setNome("California");
         cal.setCor("amarelo");
         cal.setContinente(Continente.continentes.AMERICA_DO_NORTE);
+        Total_ter.add(cal);
         
         Territorio mex = new Territorio();
         mex.setNome("Mexico");
         mex.setCor("amarelo");
         mex.setContinente(Continente.continentes.AMERICA_DO_NORTE);
+        Total_ter.add(mex);
         
         Territorio gro = new Territorio();
         gro.setNome("Groenlandia");
         gro.setCor("amarelo");
         gro.setContinente(Continente.continentes.AMERICA_DO_NORTE);
+        Total_ter.add(gro);
         
         Territorio ota = new Territorio();
         ota.setNome("Otawa");
         ota.setCor("amarelo");
         ota.setContinente(Continente.continentes.AMERICA_DO_NORTE);
+        Total_ter.add(ota);
         
         Territorio ny = new Territorio();
         ny.setNome("Nova York");
         ny.setCor("amarelo");
         ny.setContinente(Continente.continentes.AMERICA_DO_NORTE);
+        Total_ter.add(ny);
         
     /////////////////////// América do Sul////////////////////////////////
         
@@ -66,21 +74,25 @@ public class War {
         chi.setNome("Chile");
         chi.setCor("verde");
         chi.setContinente(Continente.continentes.AMERICA_DO_SUL);
+        Total_ter.add(chi);
         
         Territorio col = new Territorio();
         col.setNome("Colombia");
         col.setCor("verde");
         col.setContinente(Continente.continentes.AMERICA_DO_SUL);
+        Total_ter.add(col);
         
         Territorio arg = new Territorio();
         arg.setNome("Argentina");
         arg.setCor("verde");
         arg.setContinente(Continente.continentes.AMERICA_DO_SUL);
+        Total_ter.add(arg);
         
         Territorio bra = new Territorio();
         bra.setNome("Brasil");
         bra.setCor ("verde");
         bra.setContinente(Continente.continentes.AMERICA_DO_SUL);
+        Total_ter.add(bra);
         
     /////////////////////// Europa ////////////////////////////////
         
@@ -88,26 +100,31 @@ public class War {
         ing.setNome("Inglaterra");
         ing.setCor("azul");
         ing.setContinente(Continente.continentes.EUROPA);
+        Total_ter.add(ing);
         
         Territorio ita = new Territorio();
         ita.setNome("Italia");
         ita.setCor("azul");
         ita.setContinente(Continente.continentes.EUROPA);
+        Total_ter.add(ita);
         
         Territorio sue = new Territorio();
         sue.setNome("Suécia");
         sue.setCor("azul");
         sue.setContinente(Continente.continentes.EUROPA);
+        Total_ter.add(sue);
         
         Territorio ale = new Territorio();
         ale.setNome("Alemanha");
-        sue.setCor("azul");
-        sue.setContinente(Continente.continentes.EUROPA);
+        ale.setCor("azul");
+        ale.setContinente(Continente.continentes.EUROPA);
+        Total_ter.add(ale);
         
         Territorio mos = new Territorio();
         mos.setNome("Moscou");
         mos.setCor("azul");
         mos.setContinente(Continente.continentes.EUROPA);
+        Total_ter.add(mos);
         
     /////////////////////// África ////////////////////////////////
         
@@ -115,31 +132,37 @@ public class War {
         nig.setNome("Nigeria");
         nig.setCor("roxo");
         nig.setContinente(Continente.continentes.AFRICA);
+        Total_ter.add(nig);
         
         Territorio egi = new Territorio();
         egi.setNome("Egito");
         egi.setCor("roxo");
         egi.setContinente(Continente.continentes.AFRICA);
+        Total_ter.add(egi);
         
         Territorio con = new Territorio();
         con.setNome("Congo");
         con.setCor("roxo");
         con.setContinente(Continente.continentes.AFRICA);
+        Total_ter.add(con);
         
         Territorio afr = new Territorio();
         afr.setNome("África do Sul");
         afr.setCor("roxo");
         afr.setContinente(Continente.continentes.AFRICA);
+        Total_ter.add(afr);
         
         Territorio mad = new Territorio();
         mad.setNome("Madagascar");
         mad.setCor("roxo");
         mad.setContinente(Continente.continentes.AFRICA);
+        Total_ter.add(mad);
         
         Territorio sud = new Territorio();
         sud.setNome("Sudão");
         sud.setCor("roxo");
         sud.setContinente(Continente.continentes.AFRICA);
+        Total_ter.add(sud);
         
     /////////////////////// Asia ////////////////////////////////
         
@@ -147,37 +170,43 @@ public class War {
         ori.setNome("Oriente Médio");
         ori.setCor("laranja");
         ori.setContinente(Continente.continentes.ASIA);
+        Total_ter.add(ori);
         
         Territorio ind = new Territorio();
         ind.setNome("Índia");
         ind.setCor("laranja");
         ind.setContinente(Continente.continentes.ASIA);
+        Total_ter.add(ind);
         
         Territorio om = new Territorio();
         om.setNome("Omsk");
         om.setCor("laranja");
         om.setContinente(Continente.continentes.ASIA);
+        Total_ter.add(om);
         
         Territorio vlad = new Territorio();
         vlad.setNome("Vladivostok");
         vlad.setCor("laranja");
         vlad.setContinente(Continente.continentes.ASIA);
-        //al.setFronteira(vlad);
+        Total_ter.add(vlad);
         
         Territorio sib = new Territorio();
         sib.setNome("Sibéria");
         sib.setCor("laranja");
         sib.setContinente(Continente.continentes.ASIA);
+        Total_ter.add(sib);
         
         Territorio chin = new Territorio();
         chin.setNome("China");
         chin.setCor("laranja");
         chin.setContinente(Continente.continentes.ASIA);
+        Total_ter.add(chin);
         
         Territorio jap = new Territorio();
         jap.setNome("Japão");
         jap.setCor("laranja");
         jap.setContinente(Continente.continentes.ASIA);
+        Total_ter.add(jap);
         
     /////////////////////// Oceania ////////////////////////////////
         
@@ -185,23 +214,27 @@ public class War {
         sum.setNome("Sumatra");
         sum.setCor("rosa");
         sum.setContinente(Continente.continentes.OCEANIA);
+        Total_ter.add(sum);
         
         Territorio bor = new Territorio();
         bor.setNome("Bornéu");
         bor.setCor("rosa");
         bor.setContinente(Continente.continentes.OCEANIA);
+        Total_ter.add(bor);
         
         Territorio aus = new Territorio();
         aus.setNome("Austrália");
         aus.setCor("rosa");
         aus.setContinente(Continente.continentes.OCEANIA);
+        Total_ter.add(aus);
         
         Territorio nov = new Territorio();
         nov.setNome("Nova Guiné");
         nov.setCor("rosa");
         nov.setContinente(Continente.continentes.OCEANIA);
+        Total_ter.add(nov);
  
- //////////////// Definição das fronteiras ////////////////////////       
+ //////////////// Definição das fronteiras /////////////////////////////////////       
 // América do Norte
     List<Territorio> t = new ArrayList();
         t.add(van);
@@ -398,6 +431,41 @@ public class War {
         t.add(arg);
         nov.setFronteira(t);
         t.clear();
-
-  }
-}
+  
+    
+ /////////////////////// Inicialização//////////////////////////////////////////
+    
+        Jogador jogador_1 = new Jogador();
+        Jogador jogador_2 = new Jogador();
+        int i=0,cont=0;
+        
+        Collections.shuffle(Total_ter); // Para dar um Random nas posições dos elementos da lista
+        jogador_1.setNum(0);
+        jogador_1.setCor("Azul");
+        jogador_2.setNum(1);
+        jogador_2.setCor("Vermelho");
+        if(jogador_1.getNum() == 1){
+            System.out.println("O jogador 1 terá um território a mais");
+        }
+        else{
+            System.out.println("O jogador 2 terá um território a mais");
+        }
+        
+        System.out.println("\n");
+        
+        for(Territorio ter : Total_ter){
+            i++;
+            if(i>=17){
+              System.out.println("Território do jogador 2: \n");
+              ter.setCor(jogador_2.getCor());
+              System.out.println("Território " + ter.getNome() + " da cor: " + ter.getCor() + "\n");
+            }
+            else{
+              System.out.println("Território do jogador 1: \n");
+              ter.setCor(jogador_1.getCor());
+              System.out.println("Território " + ter.getNome() + " da cor: " + ter.getCor() + "\n");
+            }
+        }
+    
+    }  
+}   
