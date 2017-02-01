@@ -39,13 +39,14 @@ public class Territorio {
     private int aereo;
 
     public Territorio() {
+        this.listafronteira = new ArrayList<>();
     }
 
-    public Territorio(String nome , String cor, continentes conti, List<Territorio> listafronteira){
+    public Territorio(String nome , String cor, continentes conti){
         this.nome = nome;
         this.cor  = cor;
         this.conti = conti;
-        this.listafronteira = new ArrayList();
+        this.listafronteira = new ArrayList<Territorio>();
     }
     
     public String getNome(){
