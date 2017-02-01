@@ -9,6 +9,8 @@ package war;
  *
  * @author kevin
  */
-public class Exercito {
+public abstract class Exercito {
     
+    public int Combater(){
+    }
 }

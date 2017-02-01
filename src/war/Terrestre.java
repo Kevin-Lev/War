@@ -7,8 +7,13 @@ package war;
 
 /**
  *
- * @author kevin
+ * @author Kevin Levrone
  */
 public class Terrestre extends Exercito {
+    
+    @Override
+    public int Combater(){
+        
+    }
     
 }

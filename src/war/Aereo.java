@@ -7,8 +7,12 @@ package war;
 
 /**
  *
- * @author kevin
+ * @author Kevin Levrone
  */
 public class Aereo extends Exercito {
     
+    @Override
+    public int Combater(){
+       
+    }
 }
