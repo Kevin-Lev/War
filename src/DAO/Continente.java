@@ -10,10 +10,19 @@ package DAO;
  * @author Kevin Levrone
  */
 public class Continente {
-    private int num_territorios;
     
     public enum continentes{
         AFRICA,AMERICA_DO_NORTE, AMERICA_DO_SUL, ASIA, EUROPA, OCEANIA;
+        
+        private int num_territorios;
+
+        public void setNum_territorios(int num_territorios) {
+            this.num_territorios = num_territorios;
+        }
+
+        public int getNum_territorios() {
+            return num_territorios;
+        }
     }
 }
 

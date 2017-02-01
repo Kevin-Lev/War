@@ -19,6 +19,24 @@ public class Territorio {
     private String cor;
     private continentes conti;
     private List<Territorio> listafronteira;
+    private int terrestre;
+
+    public void setTerrestre(int terrestre) {
+        this.terrestre = terrestre;
+    }
+
+    public void setAereo(int aereo) {
+        this.aereo = aereo;
+    }
+
+    public int getTerrestre() {
+        return terrestre;
+    }
+
+    public int getAereo() {
+        return aereo;
+    }
+    private int aereo;
 
     public Territorio() {
     }
@@ -58,8 +76,8 @@ public class Territorio {
         return listafronteira;
     }
     
-    public void setFronteira(List<Territorio> listafronteira){ // recebe tipo territorio
-       this.listafronteira = listafronteira;
+    public void setFronteira(Territorio t){ // recebe tipo territorio
+       this.listafronteira.add(t);
     }
     
 }
