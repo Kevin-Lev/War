@@ -11,7 +11,10 @@ import DAO.Mapa;
 import DAO.Territorio;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  *
@@ -399,7 +402,7 @@ public class War {
         }
         else{
             System.out.println("O adversário terá um território a mais");
-            System.out.println("O adversário irá iniciar o ataque");
+            System.out.println("O jogador 1 irá iniciar o ataque");
         }
         
         System.out.println("\n");
@@ -467,10 +470,40 @@ public class War {
          
         // Serve apenas para o recebimento dos novos exércitos e para distribuí-los 
         //nos territórios
+        int k=0, l=0;
+        Map<Integer, String> j1_territorios = new HashMap(); 
+        Map<Integer, String> adv_territorios = new HashMap(); 
+        List<Territorio> ter_j1 = jogador_1.getTerritorios(), ter_adv = adversario.getTerritorios();
+        Scanner scanner = new Scanner(System.in); 
         
+        for(Territorio t: ter_j1){
+            j1_territorios.put(k, t.getNome());
+            k++;
+        }
+        
+        for(Territorio t: ter_adv){
+            adv_territorios.put(k, t.getNome());
+            k++;
+        }
+                
         jogador_1.setEx_terrestres(jogador_1.getTerritorios().size()/2);
         jogador_1.setEx_aereos(jogador_1.getTerritorios().size()/3);
         adversario.setEx_terrestres(adversario.getTerritorios().size()/2);
         adversario.setEx_aereos(adversario.getTerritorios().size()/3);
+        
+        System.out.println("Jogador 1 - Distribua seus exércitos terrestres!\n");
+        while(jogador_1.getEx_terrestres()>0){
+            System.out.println("Exércitos disponíveis: " + jogador_1.getEx_terrestres() + "\n");
+            System.out.println("Selecione o número do território desejado para distribuir um exército: \n");
+            for(k=0;k<ter_j1.size();k++){
+                System.out.println(k + ")" + " " + ter_j1.get(k).getNome() + " (" + ter_j1.get(k).getTerrestre() + " " + "exército(s)" + ")");
+            }
+            System.out.print("\nTerritorio: ");
+            l = scanner.nextInt();
+            ter_j1.get(l).setTerrestre((ter_j1.get(l).getTerrestre()+1));
+            System.out.println(ter_j1.get(l).getNome() + " " + "recebeu um exército a mais!");
+            jogador_1.setEx_terrestres((jogador_1.getEx_terrestres()-1));
+            System.out.println("\n");
+        }
     }  
 }   
