@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,38 @@ public class Jogador {
     private String cor;
     private List<Territorio> territorios;
     private int continentes;
+    private int ex_terrestres;
+    private int ex_aereos;
+
+    public void setEx_terrestres(int ex_terrestres) {
+        this.ex_terrestres = ex_terrestres;
+    }
+
+    public void setEx_aereos(int ex_aereos) {
+        this.ex_aereos = ex_aereos;
+    }
+
+    public int getEx_terrestres() {
+        return ex_terrestres;
+    }
+
+    public int getEx_aereos() {
+        return ex_aereos;
+    }
+    
+    private enum Conti{
+        AFR, AMER_N, AMER_S, ASI, EURO, OCEAN;
+        
+        private int n_territorios;
+    
+        public void setN_territorios(int n_territorios) {
+            this.n_territorios = n_territorios;
+        }
+    
+        public int getN_territorios() {
+            return n_territorios;
+        }
+    }
 
     public void setContinentes(int continentes) {
         this.continentes = continentes;
@@ -27,12 +60,14 @@ public class Jogador {
     }
 
     public Jogador(){    
+        this.territorios = new ArrayList();
     }
     
-    public Jogador(String nome, int num, String cor){
+    public Jogador(String nome, int num, String cor, List<Territorio> territorios){
         this.nome = nome;
         this.num = num;
         this.cor = cor;
+        this.territorios = territorios;
     }
     
     public String getNome(){
@@ -63,8 +98,8 @@ public class Jogador {
         return territorios;
     }
     
-    public void setTerritorios(List<Territorio> territorios){
-        this.territorios = territorios;
+    public void setTerritorios(Territorio territorio){
+        this.territorios.add(territorio);
     }
     
 }
