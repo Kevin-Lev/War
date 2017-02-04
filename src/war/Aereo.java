@@ -5,14 +5,21 @@
  */
 package war;
 
+import java.util.Random;
+
+
+
 /**
  *
  * @author Kevin Levrone
  */
 public class Aereo extends Exercito {
     
-    @Override
     public int Combater(){
+      Random r = new Random();
+      int menor = 0,  maior = 3;
+        
+      return r.nextInt(maior-menor) + menor;
        
     }
 }

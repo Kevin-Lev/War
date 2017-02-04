@@ -5,15 +5,23 @@
  */
 package war;
 
+import DAO.Jogador;
+import DAO.Territorio;
+import java.util.Random;
+
+
+
 /**
  *
  * @author Kevin Levrone
  */
 public class Terrestre extends Exercito {
     
-    @Override
-    public int Combater(){
+    public int Combater(Territorio t){
+        Random r = new Random();
+        int menor = 1,  maior = 6;
         
+        return r.nextInt(maior-menor) + menor;
     }
-    
+
 }
