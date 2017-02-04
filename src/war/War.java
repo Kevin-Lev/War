@@ -7,6 +7,7 @@ package war;
 
 import DAO.Continente;
 import DAO.Jogador;
+import DAO.Mapa;
 import DAO.Territorio;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +17,8 @@ import java.util.List;
  *
  * @author Kevin Levrone
  */
+
+
 public class War {
 
     /**
@@ -213,7 +216,7 @@ public class War {
  //////////////// Definição das fronteiras /////////////////////////////////////       
 // América do Norte
         
-    /*    al.setFronteira(van);
+        al.setFronteira(van);
         al.setFronteira(vlad);
         
         
@@ -373,7 +376,7 @@ public class War {
         
         nov.setFronteira(jap);
         aus.setFronteira(aus);
-        aus.setFronteira(arg); */
+        aus.setFronteira(arg); 
         
   
  /////////////////////// Inicialização//////////////////////////////////////////
@@ -392,9 +395,11 @@ public class War {
         adversario.setCor("Vermelho");
         if(jogador_1.getNum() == 1){
             System.out.println("O jogador 1 terá um território a mais");
+            System.out.println("O adversário irá iniciar o ataque");
         }
         else{
             System.out.println("O adversário terá um território a mais");
+            System.out.println("O adversário irá iniciar o ataque");
         }
         
         System.out.println("\n");
@@ -441,35 +446,31 @@ public class War {
               ter.setCor(adversario.getCor());
               ter.setTerrestre(1);
               ter.setAereo(1);
+              adversario.setTerritorios(ter);
+              
             }
             else{
               ter.setCor(jogador_1.getCor());
               ter.setTerrestre(1);
               ter.setAereo(1);
+              jogador_1.setTerritorios(ter);
             }
         }
         
         System.out.println("-------------DISTRIBUIÇÃO DE TERRITÓRIOS-------------");
         System.out.println("\n");
         
-        for(i=0;i<5;i++){
-            for(j=0;j<8;j++){
-                if(mapa[i][j] == null){
-                    System.out.print("VAZIO \t\t\t\t\t\t");
-                }
-                else if("Azul".equals(mapa[i][j].getCor())){
-                    System.out.print("|" + mapa[i][j].getNome() + "[Terrestre = " + mapa[i][j].getTerrestre() + "]" + "[Aéreo = " + mapa[i][j].getAereo() + "]" + "[Azul]" + "|" + "\t");
-                }
-                else{
-                    System.out.print("|" + mapa[i][j].getNome() + "[Terrestre = " + mapa[i][j].getTerrestre() + "]" + "[Aéreo = " + mapa[i][j].getAereo() + "]" + "[Vermelho]" + "|" + "\t");
-                }
-            }
-            System.out.println("\n\n");
-        }
-        
+        Mapa.printaMapa(mapa);
         
         
     //////////////////////////////// Preparação ////////////////////////////////    
-    
+         
+        // Serve apenas para o recebimento dos novos exércitos e para distribuí-los 
+        //nos territórios
+        
+        jogador_1.setEx_terrestres(jogador_1.getTerritorios().size()/2);
+        jogador_1.setEx_aereos(jogador_1.getTerritorios().size()/3);
+        adversario.setEx_terrestres(adversario.getTerritorios().size()/2);
+        adversario.setEx_aereos(adversario.getTerritorios().size()/3);
     }  
 }   
