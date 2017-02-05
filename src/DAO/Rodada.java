@@ -19,16 +19,6 @@ import war.Exercito;
  * @author Kevin Levrone
  */
 
-class PrioridadeDadosT implements Comparator<Exercito> {
-
-    @Override
-    public int compare(Exercito e1, Exercito e2) {
-        
-        return Integer.compare(e1.Combater(), e2.Combater());
-    }
-    
-}
-
 public class Rodada {
    
     
@@ -58,12 +48,8 @@ public class Rodada {
        }
        
        Territorio ter_ataque = territoriospraataque.get(l);
-       PrioridadeDadosT ordenaDados = new PrioridadeDadosT();
-       PriorityQueue<Terrestre> terrestres_ataque = new PriorityQueue<>(ter_ataque.getListaterrestre().size(), ordenaDados);
+       PriorityQueue<Integer> combates_ataque = new PriorityQueue<>();
        
-       for(Terrestre terr: ter_ataque.getListaterrestre()){
-            terrestres_ataque.add(terr);
-        }
        
        for(Territorio t: territoriospraataque.get(l).getFronteira()){
           if(t.getCor().equals(defesa.getCor())){ 
@@ -84,10 +70,10 @@ public class Rodada {
         }
         
         Territorio ter_defesa = fronteirasdadefesa.get(l);
-        PriorityQueue<Terrestre> terrestres_defesa = new PriorityQueue<>(ter_defesa.getListaterrestre().size(), ordenaDados);
+        PriorityQueue<Integer> combates_defesa = new PriorityQueue<>();
         
         for(Terrestre terr: ter_defesa.getListaterrestre()){
-            terrestres_defesa.add(terr);
+            combates_defesa.add(terr.Combater());
         }
         
         System.out.println("Deseja atacar " + ter_defesa.getNome() + " com quantos exércitos de " + ter_ataque + "?\n");
@@ -103,10 +89,29 @@ public class Rodada {
             l = scanner.nextInt();
         }
         
-        if(terrestres_ataque.peek().Combater() < terrestres_defesa.peek().Combater() || terrestres_ataque.peek().Combater() == terrestres_defesa.peek().Combater()){
-            System.out.println("O" + defesa.getNome() + "defendeu o território" + ter_defesa + "\n");
-            ter_ataque.getListaterrestre().remove(0);
+        int n=1;
+        for(Terrestre terr: ter_ataque.getListaterrestre()){
+            combates_ataque.add(terr.Combater());
+            if(n==l){
+              break;
+            }
+            n++;
         }   
+        
+        n=0;
+        int perdas_atacante=0, perdas_defesa=0;
+        while(n<=l){
+           if(combates_ataque.peek() < combates_defesa.peek() || combates_ataque.peek() == combates_defesa.peek()){
+               ter_ataque.getListaterrestre().remove(0);
+               perdas_atacante+= 1;
+           }
+           else{
+               ter_defesa.getListaterrestre().remove(0);
+               perdas_defesa+= 1;
+           }
+        }
+        System.out.println("O " + atacante.getNome() + "perdeu" + perdas_atacante + "exército(s) no " + ter_ataque.getNome()+ "\n");
+        System.out.println("O " + defesa.getNome() + "perdeu" + perdas_defesa + "exército(s) no " + ter_defesa.getNome());
         
     }
     
