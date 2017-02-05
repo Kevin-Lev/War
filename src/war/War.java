@@ -207,15 +207,15 @@ public class War {
         borneu.setContinente(Continente.OCEANIA);
         Total_ter.add(borneu);
         
-        Territorio aus = new Territorio();
-        aus.setNome("Austrália");
-        aus.setContinente(Continente.OCEANIA);
-        Total_ter.add(aus);
+        Territorio australia = new Territorio();
+        australia.setNome("Austrália");
+        australia.setContinente(Continente.OCEANIA);
+        Total_ter.add(australia);
         
-        Territorio nov = new Territorio();
-        nov.setNome("Nova Guiné");
-        nov.setContinente(Continente.OCEANIA);
-        Total_ter.add(nov);
+        Territorio novaGuine = new Territorio();
+        novaGuine.setNome("Nova Guiné");
+        novaGuine.setContinente(Continente.OCEANIA);
+        Total_ter.add(novaGuine);
  
  //////////////// Definição das fronteiras /////////////////////////////////////       
 // América do Norte
@@ -259,7 +259,7 @@ public class War {
 
         argentina.setFronteira(chile);
         argentina.setFronteira(brasil);
-        argentina.setFronteira(nov);
+        argentina.setFronteira(novaGuine);
 
 //Europa
         
@@ -331,7 +331,7 @@ public class War {
         chile.setFronteira(japao);
 
         japao.setFronteira(borneu);
-        japao.setFronteira(nov);
+        japao.setFronteira(novaGuine);
         japao.setFronteira(chile);
         
 // Oceania
@@ -343,30 +343,29 @@ public class War {
         borneu.setFronteira(india);
         borneu.setFronteira(sumatra);
         borneu.setFronteira(japao);
-        borneu.setFronteira(aus);
+        borneu.setFronteira(australia);
 
-        aus.setFronteira(borneu);
-        aus.setFronteira(nov);
+        australia.setFronteira(novaGuine);
         
-        nov.setFronteira(japao);
-        aus.setFronteira(aus);
-        aus.setFronteira(argentina);
+        novaGuine.setFronteira(japao);
+        australia.setFronteira(australia);
+        australia.setFronteira(argentina);
   
  /////////////////////// Inicialização//////////////////////////////////////////
     
-        Jogador jogador_1 = new Jogador();
-        Jogador adversario = new Jogador();
+        Jogador player1 = new Jogador();
+        Jogador player2 = new Jogador();
         int i=0,j,cont=0;
         
         System.out.println("####################### WAR ##########################");
         System.out.println("\n");
         
         Collections.shuffle(Total_ter); // Para dar um Random nas posições dos elementos da lista
-        jogador_1.setTurno(0);
-        jogador_1.setCor("Azul");
-        adversario.setTurno(1);
-        adversario.setCor("Vermelho");
-        if(jogador_1.getTurno() == 1){
+        player1.setTurno(0);
+        player1.setCor("Azul");
+        player2.setTurno(1);
+        player2.setCor("Vermelho");
+        if(player1.getTurno() == 1){
             System.out.println("O jogador 1 terá um território a mais");
             System.out.println("O adversário irá iniciar o ataque");
         }
@@ -410,23 +409,23 @@ public class War {
         mapa[4][1] = brasil;
         mapa[4][3] = africaDoSul;
         mapa[4][4] = madagascar;
-        mapa[4][6] = aus;
-        mapa[4][7] = nov;
+        mapa[4][6] = australia;
+        mapa[4][7] = novaGuine;
         
         for(Territorio ter : Total_ter){
             i++;
             if(i>=17){
-              ter.setCor(adversario.getCor());
+              ter.setCor(player2.getCor());
               ter.setTerrestre(1);
               ter.setAereo(1);
-              adversario.setTerritorios(ter);
+              player2.setTerritorios(ter);
               
             }
             else{
-              ter.setCor(jogador_1.getCor());
+              ter.setCor(player1.getCor());
               ter.setTerrestre(1);
               ter.setAereo(1);
-              jogador_1.setTerritorios(ter);
+              player1.setTerritorios(ter);
             }
         }
         
@@ -443,7 +442,7 @@ public class War {
         int k=0, l=0;
         Map<Integer, String> j1_territorios = new HashMap(); 
         Map<Integer, String> adv_territorios = new HashMap(); 
-        List<Territorio> ter_j1 = jogador_1.getTerritorios(), ter_adv = adversario.getTerritorios();
+        List<Territorio> ter_j1 = player1.getTerritorios(), ter_adv = player2.getTerritorios();
         Scanner scanner = new Scanner(System.in); 
         
         for(Territorio t: ter_j1){
@@ -456,17 +455,17 @@ public class War {
             k++;
         }
                 
-        jogador_1.setEx_terrestres(jogador_1.getTerritorios().size()/2);
-        jogador_1.setEx_aereos(jogador_1.getTerritorios().size()/3);
-        adversario.setEx_terrestres(adversario.getTerritorios().size()/2);
-        adversario.setEx_aereos(adversario.getTerritorios().size()/3);
+        player1.setEx_terrestres(player1.getTerritorios().size()/2);
+        player1.setEx_aereos(player1.getTerritorios().size()/3);
+        player2.setEx_terrestres(player2.getTerritorios().size()/2);
+        player2.setEx_aereos(player2.getTerritorios().size()/3);
         
         System.out.println("Jogador 1 - Distribua seus exércitos terrestres!\n");
 
         do {
             if ((playerTurn / 2) == 0) {
-                while (jogador_1.getEx_terrestres() > 0) {
-                    System.out.println("Exércitos disponíveis: " + jogador_1.getEx_terrestres() + "\n");
+                while (player1.getEx_terrestres() > 0) {
+                    System.out.println("Exércitos disponíveis: " + player1.getEx_terrestres() + "\n");
                     System.out.println("Selecione o número do território desejado para distribuir um exército: \n");
                     for (k = 0; k < ter_j1.size(); k++) {
                         System.out.println(k + ")" + " " + ter_j1.get(k).getNome() + " (" + ter_j1.get(k).getTerrestre() + " " + "exército(s)" + ")");
@@ -475,13 +474,13 @@ public class War {
                     l = scanner.nextInt();
                     ter_j1.get(l).setTerrestre((ter_j1.get(l).getTerrestre() + 1));
                     System.out.println(ter_j1.get(l).getNome() + " " + "recebeu um exército a mais!");
-                    jogador_1.setEx_terrestres((jogador_1.getEx_terrestres() - 1));
+                    player1.setEx_terrestres((player1.getEx_terrestres() - 1));
                     System.out.println("\n");
                 }
             }
 
             else {
-                System.out.println("Exércitos disponíveis: " + adversario.getEx_terrestres() + "\n");
+                System.out.println("Exércitos disponíveis: " + player2.getEx_terrestres() + "\n");
                 System.out.println("Selecione o número do território desejado para distribuir um exército: \n");
                 for (k = 0; k < ter_j1.size(); k++) {
                     System.out.println(k + ")" + " " + ter_j1.get(k).getNome() + " (" + ter_j1.get(k).getTerrestre() + " " + "exército(s)" + ")");
@@ -490,11 +489,11 @@ public class War {
                 l = scanner.nextInt();
                 ter_j1.get(l).setTerrestre((ter_j1.get(l).getTerrestre() + 1));
                 System.out.println(ter_j1.get(l).getNome() + " " + "recebeu um exército a mais!");
-                jogador_1.setEx_terrestres((jogador_1.getEx_terrestres() - 1));
+                player1.setEx_terrestres((player1.getEx_terrestres() - 1));
                 System.out.println("\n");
             }
 
             playerTurn++;
-        } while ((jogador_1.getContinentes()) < 2 && (adversario.getContinentes() < 2));
+        } while ((player1.getContinentes()) < 2 && (player2.getContinentes() < 2));
     }  
 }   
