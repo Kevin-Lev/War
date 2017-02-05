@@ -1,7 +1,4 @@
-/War/build/
-/lib/
-/out/
-/*.mf
-/*.iml
-/*.md
-/.idea
+/War/build/*
+/lib/*
+/out/*
+/.idea/*
