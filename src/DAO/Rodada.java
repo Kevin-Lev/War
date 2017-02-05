@@ -5,17 +5,32 @@
  */
 package DAO;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 import war.War;
-
+import war.Terrestre;
+import war.Exercito;
 /**
  *
  * @author Kevin Levrone
  */
+
+class PrioridadeDadosT implements Comparator<Exercito> {
+
+    @Override
+    public int compare(Exercito e1, Exercito e2) {
+        
+        return Integer.compare(e1.Combater(), e2.Combater());
+    }
+    
+}
+
 public class Rodada {
+   
     
     public static void combateTerrestre(Jogador atacante, Jogador defesa){
        Map<Integer, Territorio> fronteirasdadefesa = new HashMap();
@@ -43,6 +58,12 @@ public class Rodada {
        }
        
        Territorio ter_ataque = territoriospraataque.get(l);
+       PrioridadeDadosT ordenaDados = new PrioridadeDadosT();
+       PriorityQueue<Terrestre> terrestres_ataque = new PriorityQueue<>(ter_ataque.getListaterrestre().size(), ordenaDados);
+       
+       for(Terrestre terr: ter_ataque.getListaterrestre()){
+            terrestres_ataque.add(terr);
+        }
        
        for(Territorio t: territoriospraataque.get(l).getFronteira()){
           if(t.getCor().equals(defesa.getCor())){ 
@@ -63,6 +84,11 @@ public class Rodada {
         }
         
         Territorio ter_defesa = fronteirasdadefesa.get(l);
+        PriorityQueue<Terrestre> terrestres_defesa = new PriorityQueue<>(ter_defesa.getListaterrestre().size(), ordenaDados);
+        
+        for(Terrestre terr: ter_defesa.getListaterrestre()){
+            terrestres_defesa.add(terr);
+        }
         
         System.out.println("Deseja atacar " + ter_defesa.getNome() + " com quantos exércitos de " + ter_ataque + "?\n");
         System.out.println("Quantidade de exércitos disponíveis em " + ter_ataque.getNome() + " : " + ter_ataque.getListaterrestre() + "\n");
@@ -72,6 +98,16 @@ public class Rodada {
             System.out.print("Valor inválido! Deve permanecer pelo menos 1 exército no território");
             l = scanner.nextInt();
         }
+        while(l>3){
+            System.out.print("Você só pode mover até 3 exércitos para o ataque !!");
+            l = scanner.nextInt();
+        }
+        
+        if(terrestres_ataque.peek().Combater() < terrestres_defesa.peek().Combater() || terrestres_ataque.peek().Combater() == terrestres_defesa.peek().Combater()){
+            System.out.println("O" + defesa.getNome() + "defendeu o território" + ter_defesa + "\n");
+            ter_ataque.getListaterrestre().remove(0);
+        }   
+        
     }
     
     public static void selecionaOpcao(Jogador atacante, Jogador defesa){
