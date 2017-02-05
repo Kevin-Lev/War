@@ -109,6 +109,14 @@ public class Rodada {
                ter_defesa.getListaterrestre().remove(0);
                perdas_defesa+= 1;
            }
+           if(ter_defesa.getListaterrestre().size() == 0){
+               System.out.println("O " + atacante.getNome() + "conquistou o território " + ter_defesa.getNome());
+               ter_defesa.setCor(atacante.getCor());
+               atacante.setEx_aereos(atacante.getEx_aereos() + ter_defesa.getListaaereos().size());
+               System.out.println("O " + atacante.getNome() + " recebeu " + ter_defesa.getListaaereos().size() + " exército(s) aéreo(s) " + " do território " + ter_defesa.getNome());
+               ter_defesa.getListaaereos().clear();
+               break;
+           }
         }
         System.out.println("O " + atacante.getNome() + "perdeu" + perdas_atacante + "exército(s) no " + ter_ataque.getNome()+ "\n");
         System.out.println("O " + defesa.getNome() + "perdeu" + perdas_defesa + "exército(s) no " + ter_defesa.getNome());
@@ -126,10 +134,13 @@ public class Rodada {
         System.out.println("3) Remanejamento de exércitos\n");
         System.out.print("Opcao: ");
         opcao = scanner.nextInt();
-        if(opcao > 3 || opcao < 1){
+        while(opcao > 3 || opcao < 1){
             System.out.println("Número inválido");
             System.out.print("Opcao: ");
             opcao = scanner.nextInt();
+        }
+        if(opcao == 1){
+            combateTerrestre(atacante, defesa);
         }
     }
 }
