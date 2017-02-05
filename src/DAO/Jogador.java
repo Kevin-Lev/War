@@ -17,11 +17,6 @@ import java.util.List;
 public class Jogador {
     private String nome;
     private int turno;
-=======
-public class Jogador {
-    private String nome;
-    private int num;
->>>>>>> 37a5176bce00fe9d441a169783a1d91b3303fd0f
     private String cor;
     private List<Territorio> territorios;
     private int continentes;
@@ -69,8 +64,7 @@ public class Jogador {
     public Jogador(){    
         this.territorios = new ArrayList();
     }
-    
-<<<<<<< HEAD
+
     public Jogador(String nome, int turno, String cor, List<Territorio> territorios){
         this.nome = nome;
         this.turno = turno;
@@ -81,14 +75,6 @@ public class Jogador {
     public Jogador(int turno) {
         this.turno = turno;
     }
-=======
-    public Jogador(String nome, int num, String cor, List<Territorio> territorios){
-        this.nome = nome;
-        this.num = num;
-        this.cor = cor;
-        this.territorios = territorios;
-    }
->>>>>>> 37a5176bce00fe9d441a169783a1d91b3303fd0f
     
     public String getNome(){
         return this.nome;
@@ -97,22 +83,13 @@ public class Jogador {
     public void setNome(String nome){
         this.nome = nome;
     }
-    
-<<<<<<< HEAD
+
     public int getTurno(){
         return this.turno;
     }
     
     public void setTurno(int turno){
         this.turno = turno;
-=======
-    public int getNum(){
-        return this.num;
-    }
-    
-    public void setNum(int num){
-        this.num = num;
->>>>>>> 37a5176bce00fe9d441a169783a1d91b3303fd0f
     }
     
     public String getCor(){

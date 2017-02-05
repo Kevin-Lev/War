@@ -19,9 +19,8 @@ public class Terrestre extends Exercito {
     
     public int Combater(Territorio t){
         Random r = new Random();
-        int menor = 1,  maior = 6;
         
-        return r.nextInt(maior-menor) + menor;
+        return r.nextInt(7);
     }
 
 }
