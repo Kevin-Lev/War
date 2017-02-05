@@ -5,14 +5,22 @@
  */
 package war;
 
+<<<<<<< HEAD
 import DAO.Jogador;
 
 import java.util.Random;
 
+=======
+import java.util.Random;
+
+
+
+>>>>>>> 37a5176bce00fe9d441a169783a1d91b3303fd0f
 /**
  *
  * @author Kevin Levrone
  */
+<<<<<<< HEAD
 
 public class Aereo extends Exercito {
 
@@ -22,5 +30,15 @@ public class Aereo extends Exercito {
 
             return random.nextInt(4);
         }
+=======
+public class Aereo extends Exercito {
+    
+    public int Combater(){
+      Random r = new Random();
+      int menor = 0,  maior = 3;
+        
+      return r.nextInt(maior-menor) + menor;
+       
+>>>>>>> 37a5176bce00fe9d441a169783a1d91b3303fd0f
     }
 }
