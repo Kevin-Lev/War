@@ -22,7 +22,7 @@ public class Distribuicao {
         List<Territorio> territoriosJogador = jogador.getTerritorios();
         Scanner scanner = new Scanner(System.in); 
         
-        jogador.setExercitoTerrestre(jogador.getTerritorios().size()/2);
+        jogador.setNumExercitoTerrestre(jogador.getTerritorios().size()/2);
 
         System.out.println(jogador.getCor() + " - Distribua seus exércitos terrestres!\n");
         while(jogador.getNumExercitoTerrestre()>0){
@@ -40,8 +40,8 @@ public class Distribuicao {
               System.out.println("\n");
             }
             territoriosJogador.get(opcaoEscolhida).addExercitoTerrestre(new Terrestre());
-            System.out.println(territoriosJogador.get(opcaoEscolhida).getNome() + " " + "recebeu um exército terrestre a mais!");
-            jogador.setExercitoTerrestre((jogador.getNumExercitoTerrestre()-1));
+            System.out.println(territoriosJogador.get(opcaoEscolhida).getCor() + " " + "recebeu um exército terrestre a mais!");
+            jogador.setNumExercitoTerrestre((jogador.getNumExercitoTerrestre()-1));
             System.out.println("\n");
         }
     }
@@ -51,7 +51,7 @@ public class Distribuicao {
         List<Territorio> territoriosJogador = jogador.getTerritorios();
         Scanner scanner = new Scanner(System.in); 
         
-        jogador.setEx_aereos(jogador.getTerritorios().size()/3);
+        jogador.setNumExercitoAereo(jogador.getTerritorios().size()/3);
 
         System.out.println(jogador.getCor() + "- Distribua seus exércitos aéreos!\n");
         while(jogador.getNumExercitosAereo()>0){
@@ -71,8 +71,8 @@ public class Distribuicao {
               System.out.println("\n");
             }
             territoriosJogador.get(opcaoEscolhida).addExercitoAereos(new Aereo());
-            System.out.println(territoriosJogador.get(opcaoEscolhida).getNome() + " " + "recebeu um exército aéreo a mais!");
-            jogador.setEx_aereos((jogador.getNumExercitosAereo()-1));
+            System.out.println(territoriosJogador.get(opcaoEscolhida).getCor() + " " + "recebeu um exército aéreo a mais!");
+            jogador.setNumExercitoAereo((jogador.getNumExercitosAereo()-1));
             System.out.println("\n");
         }
     }  

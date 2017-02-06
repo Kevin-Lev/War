@@ -15,7 +15,7 @@ import java.util.*;
 
 public class Rodada {
 
-    public static void combateTerrestre(Jogador atacante, Jogador defesa){
+    public static void combateTerrestre(Jogador atacante, Jogador defensor){
        List<Territorio> territoriosAtacantes = atacante.getTerritorios();
        List<Territorio> fronteirasAtacantes = new ArrayList<>();
        List<Territorio> territoriosAlvos = new ArrayList<>();
@@ -30,10 +30,10 @@ public class Rodada {
           } 
        }
        
-       System.out.println(atacante.getNome() + " - Selecione o número de um dos seus territórios conquistados: \n");
+       System.out.println(atacante.getCor() + " - Selecione o número de um dos seus territórios conquistados: \n");
 
        for(int i = 0; i < territoriosAlvos.size(); i++){
-           System.out.println(i + ")" + territoriosAlvos.get(i).getNome());
+           System.out.println(i + ")" + territoriosAlvos.get(i).getNome() + " " );
        }
 
        System.out.print("Território: ");
@@ -48,12 +48,12 @@ public class Rodada {
        PriorityQueue<Integer> combatesAtaque = new PriorityQueue<>();
 
        for(Territorio t: territoriosAlvos.get(opcaoEscolhida).getFronteira()){
-          if(t.getCor().equals(defesa.getCor())){ 
+          if(t.getCor().equals(defensor.getCor())){
            fronteirasAtacantes.add(t);
           }
        }
        
-        System.out.println(atacante.getNome() + "- Selecione a fronteira inimiga para atacar!\n");
+        System.out.println(atacante.getCor() + "- Selecione a fronteira inimiga para atacar!\n");
         for (int i = 0; i < fronteirasAtacantes.size(); i++) {
             System.out.println(i + ")" + " " + fronteirasAtacantes.get(i).getNome());
         }
@@ -65,78 +65,106 @@ public class Rodada {
            opcaoEscolhida = scanner.nextInt();
         }
         
-        Territorio ter_defesa = fronteirasAtacantes.get(opcaoEscolhida);
-        PriorityQueue<Integer> combates_defesa = new PriorityQueue<>();
+        Territorio territoriosDefesa = fronteirasAtacantes.get(opcaoEscolhida);
+        PriorityQueue<Integer> combatesDefesa = new PriorityQueue<>();
         
-        for(Terrestre terr: ter_defesa.getExercitosTerrestre()){
-            combates_defesa.add(terr.Combater());
+        for(int i = 0; i < Math.min(territoriosDefesa.getExercitosTerrestre().size(), 3); i++){
+            combatesDefesa.add(territoriosDefesa.getExercitosTerrestre().get(i).Combater());
         }
         
-        System.out.println("Deseja atacar " + ter_defesa.getNome() + " com quantos exércitos de " + territoriosAtacante + "?\n");
-        System.out.println("Quantidade de exércitos disponíveis em " + territoriosAtacante.getNome() + " : " + territoriosAtacante.getExercitosTerrestre() + "\n");
+        System.out.println("Deseja atacar " + territoriosDefesa.getNome() + " com quantos exércitos de "
+                + territoriosAtacante.getExercitosTerrestre().size() + "?\n");
+        System.out.println("Quantidade de exércitos disponíveis em " + territoriosAtacante.getNome() + " : " + 
+                territoriosAtacante.getExercitosTerrestre().size() + "\n");
         System.out.print("Exércitos: ");
         opcaoEscolhida = scanner.nextInt();
+
         while(opcaoEscolhida>=territoriosAtacante.getExercitosTerrestre().size()){
-            System.out.print("Valor inválido! Deve permanecer pelo menos 1 exército no território");
+            System.out.print("Valor inválido! Deve permanecer pelo menos 1 exército no território\n");
             opcaoEscolhida = scanner.nextInt();
         }
-        while(opcaoEscolhida>3){
-            System.out.print("Você só pode mover até 3 exércitos para o ataque !!");
+        while((opcaoEscolhida>3) && (opcaoEscolhida < 1)){
+            System.out.print("Você só pode mover até 3 exércitos para o ataque !!\n");
             opcaoEscolhida = scanner.nextInt();
         }
-        
-        int n=1;
-        for(Terrestre terr: territoriosAtacante.getExercitosTerrestre()){
-            combatesAtaque.add(terr.Combater());
-            if(n==opcaoEscolhida){
-              break;
+
+        for (int i = 0; i < opcaoEscolhida; i++) {
+             combatesAtaque.add(territoriosAtacante.getExercitosTerrestre().get(i).Combater());
+        }
+
+        int derrota = 0, vitoria = 0;
+        int numMinimoCombates = Math.min(combatesAtaque.size(), combatesDefesa.size());
+
+        for (int i = 0; i < numMinimoCombates; i++) {
+            if(combatesAtaque.peek() <= combatesDefesa.peek()){
+                territoriosAtacante.removeExercitoTerrestre();
+                derrota += 1;
             }
-            n++;
-        }   
-        
-        n=0;
-        int perdas_atacante=0, perdas_defesa=0;
-        while(n<=opcaoEscolhida){
-           if(combatesAtaque.peek() < combates_defesa.peek() || combatesAtaque.peek() == combates_defesa.peek()){
-               territoriosAtacante.getExercitosTerrestre().remove(0);
-               perdas_atacante+= 1;
-           }
-           else{
-               ter_defesa.getExercitosTerrestre().remove(0);
-               perdas_defesa+= 1;
-           }
-           if(ter_defesa.getExercitosTerrestre().size() == 0){
-               System.out.println("O " + atacante.getNome() + "conquistou o território " + ter_defesa.getNome());
-               ter_defesa.setCor(atacante.getCor());
-               atacante.setEx_aereos(atacante.getNumExercitosAereo() + ter_defesa.getExercitosAereo().size());
-               System.out.println("O " + atacante.getNome() + " recebeu " + ter_defesa.getExercitosAereo().size() + " exército(s) aéreo(s) " + " do território " + ter_defesa.getNome());
-               ter_defesa.getExercitosAereo().clear();
-               break;
-           }
+            else{
+                territoriosDefesa.removeExercitoTerrestre();
+                vitoria += 1;
+            }
+
+            combatesAtaque.poll();
+            combatesDefesa.poll();
         }
-        System.out.println("O " + atacante.getNome() + "perdeu" + perdas_atacante + "exército(s) no " + territoriosAtacante.getNome()+ "\n");
-        System.out.println("O " + defesa.getNome() + "perdeu" + perdas_defesa + "exército(s) no " + ter_defesa.getNome());
+
+        if(territoriosDefesa.getExercitosTerrestre().isEmpty()){
+            System.out.println("O jogador " + atacante.getCor() + " conquistou o território " + territoriosDefesa.getNome());
+            territoriosDefesa.setCor(atacante.getCor());
+            for (int i = 0; i < (opcaoEscolhida - derrota); i++) {
+                territoriosAtacante.removeExercitoTerrestre();
+                territoriosDefesa.addExercitoTerrestre(new Terrestre());
+            }
+
+            atacante.addTerritorio(territoriosDefesa);
+
+        }
+
+        System.out.println("O jogador " + atacante.getCor() + " perdeu " + derrota + " exército(s) no " + territoriosAtacante.getNome());
+        System.out.println("O jogador " + defensor.getCor() + " perdeu " + vitoria + " exército(s) no " + territoriosDefesa.getNome());
         
     }
-    
-    public static void selecionaOpcao(Jogador atacante, Jogador defesa){
-        Scanner scanner = new Scanner(System.in); 
+
+    private static void combateAereo(Jogador atacante, Jogador defensor) {
+        List<Territorio> territoriosAtacante = atacante.getTerritorios();
+
+        Scanner scanner = new Scanner(System.in);
+
+    }
+
+    public static void selecionaOpcao(Jogador atacante, Jogador defensor){
+        Scanner scanner = new Scanner(System.in);
         int opcao;
-        
-        System.out.println("Vez do " + atacante.getNome());
-        System.out.println(atacante.getNome() + "Insira o número da opção desejada: \n");
+
+        System.out.println("Vez do " + atacante.getCor());
+        System.out.println(atacante.getCor() + "Insira o número da opção desejada: \n");
         System.out.println("1) Combate Terrestre");
         System.out.println("2) Combate Aéreo");
         System.out.println("3) Remanejamento de exércitos\n");
         System.out.print("Opcao: ");
         opcao = scanner.nextInt();
-        while(opcao > 3 || opcao < 1){
-            System.out.println("Número inválido");
-            System.out.print("Opcao: ");
-            opcao = scanner.nextInt();
-        }
-        if(opcao == 1){
-            combateTerrestre(atacante, defesa);
-        }
+
+        do {
+            switch (opcao) {
+                case 1:
+                    combateTerrestre(atacante, defensor);
+                    break;
+
+                case 2:
+                    combateAereo(atacante, defensor);
+                    break;
+
+                case 3:
+
+                    break;
+
+                default:
+                    System.out.println("Número inválido");
+                    System.out.print("Opcao: ");
+                    opcao = scanner.nextInt();
+                    break;
+            }
+        } while (true);
     }
 }

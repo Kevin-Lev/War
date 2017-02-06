@@ -32,6 +32,16 @@ public class Territorio {
         this.exercitosAereo.add(aer);
     }
 
+    public void removeExercitoTerrestre() {
+        if (!exercitosTerrestre.isEmpty())
+            this.exercitosTerrestre.remove(0);
+    }
+
+    public void removeExercitoAereos() {
+        if (!exercitosAereo.isEmpty())
+            this.exercitosAereo.remove(0);
+    }
+
     public List<Terrestre> getExercitosTerrestre() {
         return exercitosTerrestre;
     }

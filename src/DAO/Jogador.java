@@ -22,11 +22,11 @@ public class Jogador {
     private int ex_terrestres;
     private int ex_aereos;
 
-    public void setExercitoTerrestre(int ex_terrestres) {
+    public void setNumExercitoTerrestre(int ex_terrestres) {
         this.ex_terrestres = ex_terrestres;
     }
 
-    public void setEx_aereos(int ex_aereos) {
+    public void setNumExercitoAereo(int ex_aereos) {
         this.ex_aereos = ex_aereos;
     }
 
@@ -36,20 +36,6 @@ public class Jogador {
 
     public int getNumExercitosAereo() {
         return ex_aereos;
-    }
-    
-    private enum Conti{
-        AFR, AMER_N, AMER_S, ASI, EURO, OCEAN;
-        
-        private int n_territorios;
-    
-        public void setN_territorios(int n_territorios) {
-            this.n_territorios = n_territorios;
-        }
-    
-        public int getN_territorios() {
-            return n_territorios;
-        }
     }
 
     public void setContinentes(int continentes) {
@@ -103,7 +89,7 @@ public class Jogador {
         return territorios;
     }
     
-    public void setTerritorios(Territorio territorio){
+    public void addTerritorio(Territorio territorio){
         this.territorios.add(territorio);
     }
     
