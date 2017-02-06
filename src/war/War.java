@@ -9,40 +9,24 @@ import DAO.Continente;
 import DAO.Jogador;
 import DAO.Mapa;
 import DAO.Territorio;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 
-/**
- *
- * @author Kevin Levrone
- */
-
+import java.util.*;
 
 public class War {
 
-    /**
-     * @param args the command line arguments
-     */
-
     public static void main(String[] args) {
-        int playerTurn = 0;
         List<Territorio> Total_ter = new ArrayList();
         
 /////////////////////// América do Norte////////////////////////////////
 
-        Continente.AFRICA.setNum_territorios(6);
-        Continente.AMERICA_DO_NORTE.setNum_territorios(7);
-        Continente.AMERICA_DO_SUL.setNum_territorios(4);
-        Continente.ASIA.setNum_territorios(7);
-        Continente.EUROPA.setNum_territorios(5);
-        Continente.OCEANIA.setNum_territorios(4);
+        Continente.AFRICA.setNumTerritorios(6);
+        Continente.AMERICA_DO_NORTE.setNumTerritorios(7);
+        Continente.AMERICA_DO_SUL.setNumTerritorios(4);
+        Continente.ASIA.setNumTerritorios(7);
+        Continente.EUROPA.setNumTerritorios(5);
+        Continente.OCEANIA.setNumTerritorios(4);
 
-
-        Territorio alasca= new Territorio();
+        Territorio alasca = new Territorio();
         alasca.setNome("Alasca");
         alasca.setContinente(Continente.AMERICA_DO_NORTE);
         Total_ter.add(alasca);

@@ -17,10 +17,10 @@ import java.util.Random;
  */
 public class Terrestre extends Exercito {
     
-    public int Combater(Territorio t){
+    public int Combater(){
         Random r = new Random();
         
-        return r.nextInt(7);
+        return r.nextInt(6);
     }
 
 }

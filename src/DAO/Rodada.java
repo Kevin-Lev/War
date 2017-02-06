@@ -5,71 +5,70 @@
  */
 package DAO;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Scanner;
-import war.War;
 import war.Terrestre;
-import war.Exercito;
+
+import java.util.*;
 /**
  *
  * @author Kevin Levrone
  */
 
 public class Rodada {
-   
-    
+
     public static void combateTerrestre(Jogador atacante, Jogador defesa){
-       Map<Integer, Territorio> fronteirasdadefesa = new HashMap();
-       Map<Integer, Territorio> territoriospraataque = new HashMap();
-       List<Territorio> territoriosatacante = atacante.getTerritorios();
+       List<Territorio> territoriosAtacantes = atacante.getTerritorios();
+       List<Territorio> fronteirasAtacantes = new ArrayList<>();
+       List<Territorio> territoriosAlvos = new ArrayList<>();
+
        Scanner scanner = new Scanner(System.in); 
-       int i=0, l;
+
+       int i = 0,
+           opcaoEscolhida = 0;
        
-       for(Territorio t: territoriosatacante){
-          if(t.getListaterrestre().size()>1){
-              territoriospraataque.put(i, t);
+       for(Territorio t: territoriosAtacantes){
+          if(t.getListaterrestre().size() > 1){
+              territoriosAlvos.put(i, t);
               i++;
           } 
        }
        
        System.out.println(atacante.getNome() + " - Selecione o número de um dos seus territórios conquistados: \n");
-       for(Integer key: territoriospraataque.keySet()){
-           System.out.println(key + ")" + territoriospraataque.get(key).getNome());
+
+       for(Integer key: territoriosAlvos.keySet()){
+           System.out.println(key + ")" + territoriosAlvos.get(key).getNome());
        }
+
        System.out.print("Território: ");
        l = scanner.nextInt();
-       while(territoriospraataque.get(l)==null){
+
+       while(territoriosAlvos.get(l)==null){
            System.out.print("Selecione um número válido: ");
            l = scanner.nextInt();
        }
        
-       Territorio ter_ataque = territoriospraataque.get(l);
+       Territorio ter_ataque = territoriosAlvos.get(l);
        PriorityQueue<Integer> combates_ataque = new PriorityQueue<>();
        
        
-       for(Territorio t: territoriospraataque.get(l).getFronteira()){
+       for(Territorio t: territoriosAlvos.get(l).getFronteira()){
           if(t.getCor().equals(defesa.getCor())){ 
-           fronteirasdadefesa.put(i, t);
+           fronteirasAtacantes.put(i, t);
            i++;
           }
        }
        
         System.out.println(atacante.getNome() + "- Selecione a fronteira inimiga para atacar!\n");
-        for(Integer key: fronteirasdadefesa.keySet()){
-            System.out.println(key + ")" + " " + fronteirasdadefesa.get(key).getNome()); 
+        for(Integer key: fronteirasAtacantes.keySet()){
+            System.out.println(key + ")" + " " + fronteirasAtacantes.get(key).getNome());
         }
         System.out.print("Fronteira: ");
         l = scanner.nextInt();
-        while(territoriospraataque.get(l)==null){
+        while(territoriosAlvos.get(l)==null){
            System.out.print("Selecione um número válido: ");
            l = scanner.nextInt();
         }
         
-        Territorio ter_defesa = fronteirasdadefesa.get(l);
+        Territorio ter_defesa = fronteirasAtacantes.get(l);
         PriorityQueue<Integer> combates_defesa = new PriorityQueue<>();
         
         for(Terrestre terr: ter_defesa.getListaterrestre()){

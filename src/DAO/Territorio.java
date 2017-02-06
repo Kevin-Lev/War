@@ -5,11 +5,11 @@
  */
 package DAO;
 
-import DAO.Continente.continentes;
-import java.util.ArrayList;
-import java.util.List;
 import war.Aereo;
 import war.Terrestre;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Territorio {
     
     private String nome;
     private String cor;
-    private continentes conti;
+    private Continente conti;
     private List<Territorio> listafronteira;
     private List<Terrestre> listaterrestre;
     private List<Aereo> listaaereos;
@@ -54,7 +54,7 @@ public class Territorio {
         this.listaaereos = new ArrayList<>();
     }
 
-    public Territorio(String nome , String cor, continentes conti){
+    public Territorio(String nome , String cor, Continente conti){
         this.nome = nome;
         this.cor  = cor;
         this.conti = conti;
@@ -77,11 +77,11 @@ public class Territorio {
         this.cor = cor;
     }
     
-    public continentes getContinente(){
+    public Continente getContinente(){
         return this.conti;
     }
     
-    public void setContinente(continentes conti){
+    public void setContinente(Continente conti){
         this.conti = conti;
     }
     

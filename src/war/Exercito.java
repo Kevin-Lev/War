@@ -12,5 +12,6 @@ package war;
 public abstract class Exercito {
     
     public int Combater(){
+        return 0;
     }
 }

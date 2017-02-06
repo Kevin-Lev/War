@@ -15,7 +15,7 @@ public enum Continente {
 
     private int num_territorios;
 
-    public void setNum_territorios(int num_territorios) {
+    public void setNumTerritorios(int num_territorios) {
                                                       this.num_territorios = num_territorios;
                                                                                              }
 
