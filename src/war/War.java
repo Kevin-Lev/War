@@ -6,6 +6,8 @@
 package war;
 
 import DAO.*;
+import jdk.nashorn.internal.scripts.JO;
+import org.w3c.dom.ls.LSException;
 
 import java.util.*;
 
@@ -301,6 +303,10 @@ public class War {
         congo.addFronteira(otawa);
         congo.addFronteira(mexico);
 
+        nigeria.addFronteira(egito);
+        nigeria.addFronteira(novayork);
+        nigeria.addFronteira(congo);
+
         sudao.addFronteira(egito);
         sudao.addFronteira(sumatra);
         sudao.addFronteira(congo);
@@ -335,9 +341,9 @@ public class War {
         india.addFronteira(chile);
         india.addFronteira(borneu);
 
-        chile.addFronteira(siberia);
-        chile.addFronteira(india);
-        chile.addFronteira(japao);
+        china.addFronteira(siberia);
+        china.addFronteira(india);
+        china.addFronteira(japao);
 
         japao.addFronteira(borneu);
         japao.addFronteira(novaGuine);
@@ -385,41 +391,15 @@ public class War {
 
         System.out.println("\n");
 
-        Territorio[][] mapa = new Territorio[5][8];
+        Map<Continente, List<Territorio>> mapa = new HashMap<>();
 
-        mapa[0][0] = alasca;
-        mapa[0][1] = vancouver;
-        mapa[0][2] = groenlandia;
-        mapa[0][3] = inglaterra;
-        mapa[0][4] = italia;
-        mapa[0][5] = suecia;
-        mapa[0][7] = vladivostok;
-        mapa[1][1] = california;
-        mapa[1][2] = otawa;
-        mapa[1][4] = alemanha;
-        mapa[1][5] = moscou;
-        mapa[1][6] = omsk;
-        mapa[1][7] = siberia;
-        mapa[2][1] = mexico;
-        mapa[2][2] = california;
-        mapa[2][3] = nigeria;
-        mapa[2][4] = egito;
-        mapa[2][5] = orienteMedio;
-        mapa[2][6] = india;
-        mapa[2][7] = china;
-        mapa[3][0] = chile;
-        mapa[3][1] = colombia;
-        mapa[3][3] = congo;
-        mapa[3][4] = sudao;
-        mapa[3][5] = sumatra;
-        mapa[3][6] = borneu;
-        mapa[3][7] = japao;
-        mapa[4][0] = argentina;
-        mapa[4][1] = brasil;
-        mapa[4][3] = africaDoSul;
-        mapa[4][4] = madagascar;
-        mapa[4][6] = australia;
-        mapa[4][7] = novaGuine;
+        mapa.put(Continente.AFRICA, Arrays.asList(nigeria, egito, sudao, congo, africaDoSul));
+        mapa.put(Continente.ASIA, Arrays.asList(omsk, orienteMedio, india, china, siberia, vladivostok, japao));
+        mapa.put(Continente.AMERICA_DO_NORTE, Arrays.asList(alasca, vancouver, california, mexico, novayork, otawa, groenlandia));
+        mapa.put(Continente.AMERICA_DO_SUL, Arrays.asList(brasil, colombia, chile, argentina));
+        mapa.put(Continente.EUROPA, Arrays.asList(inglaterra, italia, alemanha, moscou, suecia));
+        mapa.put(Continente.OCEANIA, Arrays.asList(sumatra, borneu, novaGuine, australia));
+
 
         for(Territorio ter : Total_ter){
             i++;
@@ -441,8 +421,8 @@ public class War {
         System.out.println("-------------DISTRIBUIÇÃO DE TERRITÓRIOS-------------");
         System.out.println("\n");
 
-        Mapa.printaMapa(mapa);
-
+        Mapa.setMapa(mapa);
+        Mapa.printaMapa();
 
         //////////////////////////////// Preparação ////////////////////////////////
 
@@ -471,40 +451,59 @@ public class War {
 
         int playerTurn = 0;
         do {
-            //distrbuirExercitos(player1, territoriosJogador1, scanner);
             Distribuicao.distribuiTerrestre(player1);
             Distribuicao.distribuiAereo(player1);
 
-            //distrbuirExercitos(player2, territoriosJogador2, scanner);
             Distribuicao.distribuiTerrestre(player2);
             Distribuicao.distribuiAereo(player2);
 
             Rodada.selecionaOpcao(player1, player2);
+            verificaContinente();
+
             Rodada.selecionaOpcao(player2, player1);
+            verificaContinente();
 
         } while ((player1.getContinentes()) < 2 && (player2.getContinentes() < 2));
     }
 
-//    private static void distrbuirExercitos(Jogador player, List<Territorio> territoriosJogador, Scanner scanner) {
-//        distrubuirExercitosTerrestre(player, territoriosJogador, scanner);
-//    }
-//
-//    private static void distrubuirExercitosTerrestre(Jogador player, List<Territorio> territoriosJogador, Scanner scanner) {
-//        int territorioEscolhido;
-//
-//        while (player.getNumExercitoTerrestre() > 0) {
-//            System.out.println("Exércitos disponíveis: " + player.getNumExercitoTerrestre() + "\n");
-//            System.out.println("Selecione o número do território desejado para distribuir um exército: \n");
-//            for (int k = 0; k < territoriosJogador.size(); k++) {
-//                System.out.println(k + ")" + " " + territoriosJogador.get(k).getNome() + " (" +
-//                        territoriosJogador.get(k).getExercitosTerrestre().size() + " " + "exército(s)" + ")");
-//            }
-//            System.out.print("\nTerritorio: ");
-//            territorioEscolhido = scanner.nextInt();
-//            territoriosJogador.get(territorioEscolhido).addExercitoTerrestre(new Terrestre());
-//            System.out.println(territoriosJogador.get(territorioEscolhido).getNome() + " " + "recebeu um exército a mais!");
-//            player.setNumExercitoTerrestre((player.getNumExercitoTerrestre() - 1));
-//            System.out.println("\n");
-//        }
-//    }
+    private static void verificaContinente() {
+        Map<Continente, List<Territorio>> mapaContinente = Mapa.getMapa();
+        Map<String, Integer> mapaCor = new HashMap<>();
+        int dominioAzul = 0;
+        int dominioVermelho = 0;
+
+        for (Continente continente: mapaContinente.keySet()) {
+            String corReferencia;
+            int territoriosDominados = 0;
+
+            List<Territorio> listaTerritorios = mapaContinente.get(continente);
+            corReferencia = listaTerritorios.get(0).getCor();
+
+            for (Territorio territorio: listaTerritorios) {
+                if (corReferencia == territorio.getCor())
+                    territoriosDominados++;
+            }
+
+            if (territoriosDominados == listaTerritorios.size()) {
+                if (corReferencia == "Azul") {
+                    dominioAzul++;
+                    System.out.println("Jogador azul conquistou o continente " + continente.name());
+                }
+                else {
+                    dominioVermelho++;
+                    System.out.println("Jogador vermelho conquistou o continente " + continente.name());
+                }
+            }
+        }
+
+        if (dominioAzul > 1) {
+            System.out.println("O jogador Azul ganhou o jogo! ");
+            System.exit(0);
+        }
+        else if (dominioVermelho > 1) {
+            System.out.println("O jogador Vermelho ganhou o jogo! ");
+            System.exit(0);
+        }
+    }
+
 }   

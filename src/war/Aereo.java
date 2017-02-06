@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class Aereo extends Exercito {
 
-    public int Combater(int playerTurn) {
+    public int Combater() {
         Random random = new Random();
 
         return random.nextInt(4);

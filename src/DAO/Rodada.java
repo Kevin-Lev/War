@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import war.Aereo;
 import war.Terrestre;
 
 import java.util.*;
@@ -39,7 +40,7 @@ public class Rodada {
        System.out.print("Território: ");
        opcaoEscolhida = scanner.nextInt();
 
-       while(territoriosAlvos.get(opcaoEscolhida)==null){
+       while(territoriosAlvos.get(opcaoEscolhida) == null){
            System.out.print("Selecione um número válido: ");
            opcaoEscolhida = scanner.nextInt();
        }
@@ -79,7 +80,7 @@ public class Rodada {
         System.out.print("Exércitos: ");
         opcaoEscolhida = scanner.nextInt();
 
-        while(opcaoEscolhida>=territoriosAtacante.getExercitosTerrestre().size()){
+        while ((opcaoEscolhida >= territoriosAtacante.getExercitosTerrestre().size()) || (opcaoEscolhida > 3)){
             System.out.print("Valor inválido! Deve permanecer pelo menos 1 exército no território\n");
             opcaoEscolhida = scanner.nextInt();
         }
@@ -138,12 +139,17 @@ public class Rodada {
                 territoriosComAereo.add(territorio);
 
             for (Territorio fronteira: territorio.getFronteiras()) {
-                if ((!fronteira.getExercitosAereo().isEmpty() && (territoriosAlvosAereo.indexOf(fronteira) == -1) &&
-                        (fronteira.getExercitosTerrestre().size() >= 4))) {
+                if (!fronteira.getExercitosAereo().isEmpty() && (territoriosAlvosAereo.indexOf(fronteira) == -1) &&
+                        (fronteira.getExercitosTerrestre().size() >= 4) && (fronteira.getCor() != territorio.getCor())) {
                     territoriosAlvosAereo.add(fronteira);
                 }
 
             }
+        }
+
+        if (territoriosAlvosAereo.isEmpty()) {
+            System.out.println("Sem alvo para ataque aereo!!!");
+            return;
         }
 
         System.out.println(atacante.getCor() + "- Selecione a fronteira inimiga para atacar!\n");
@@ -158,7 +164,7 @@ public class Rodada {
             opcaoEscolhida = scanner.nextInt();
         }
 
-        Territorio territorioEscolhido = territoriosAlvosAereo.get(opcaoEscolhida);
+        Territorio territorioDefesa = territoriosAlvosAereo.get(opcaoEscolhida);
         int exercitoAereoRetirado = 0;
 
         System.out.println("Selecione o territorio que possui Exercito Aereo");
@@ -185,7 +191,7 @@ public class Rodada {
         do {
             System.out.println("Digite outro territorio que deseja unir o Exercito aereo. Caso nao queria mais, digite 99");
             for (int i = 0; i < territorioParticipantes.size(); i++) {
-                System.out.println(i + ") " + territorioParticipantes.get(i).getNome() + " : possui " \
+                System.out.println(i + ") " + territorioParticipantes.get(i).getNome() + " : possui "
                         + territorioParticipantes.get(i).getExercitosAereo().size() + " exercitos aereos");
             }
 
@@ -199,11 +205,32 @@ public class Rodada {
             territoriosComAereo.get(opcaoEscolhida).removeExercitoAereos();
             exercitoAereoRetirado++;
 
-        } while ((opcaoEscolhida != 99) || (exercitoAereoRetirado < 3));
+        } while ((opcaoEscolhida != 99) && (exercitoAereoRetirado < 3));
 
+
+        int defesaAerea = territorioDefesa.getExercitosAereo().get(0).Combater();
+        System.out.println("A defesa aerea teve o combate() = " + defesaAerea);
+        exercitoAereoRetirado -= defesaAerea;
+
+        int soldadosMortos = 0;
+        int aereoAbatido = 0;
         for (int i = 0; i < exercitoAereoRetirado; i++) {
-            
+            int ataqueAereo = new Aereo().Combater();
+            System.out.println("O ataque aereoa teve o combate() = " + ataqueAereo);
+
+            if (ataqueAereo > 0) {
+                aereoAbatido++;
+                territorioDefesa.removeExercitoAereos();
+                soldadosMortos += Math.min(ataqueAereo, territorioDefesa.getExercitosTerrestre().size());
+                for (int j = 0; j < ataqueAereo; j++) {
+                    territorioDefesa.removeExercitoTerrestre();
+                }
+            }
         }
+
+        System.out.println("O jogador " + atacante.getCor() + " perdeu " + defesaAerea + " exercitos aereos");
+        System.out.println("O jogador " + defensor.getCor() + " perdeu " + aereoAbatido + " exercitos aereos e "
+                            + soldadosMortos + " exercitos terrestres");
 
 
     }
@@ -217,19 +244,51 @@ public class Rodada {
         }
     }
 
+    private static void remanejarExercito (Jogador atacante) {
+        List<Territorio> territoriosAtuais = atacante.getTerritorios();
+
+        Scanner scanner = new Scanner(System.in);
+        int origem, destino, numSoldados;
+
+        for(int k = 0; k < territoriosAtuais.size(); k++){
+            System.out.println(k + ")" + " " + territoriosAtuais.get(k).getNome() + " (" +
+                    territoriosAtuais.get(k).getExercitosTerrestre().size() + " " + "terrestre(s)" + ")");
+        }
+
+        System.out.println("Digite agora o numero de soldados que deseja locomover");
+        numSoldados = scanner.nextInt();
+
+        System.out.println("Digite o numero da posicao que vai mover os soldados e, em seguida, o numero da posicao \n" +
+                "que recebera os soldados");
+
+        do {
+            System.out.println("Digite a origem: ");
+            origem = scanner.nextInt();
+        } while (territoriosAtuais.get(origem).getExercitosAereo().size() < numSoldados+1);
+
+        System.out.println("Digite o destino: ");
+        destino = scanner.nextInt();
+
+        for (int i = 0; i < numSoldados; i++) {
+            territoriosAtuais.get(origem).removeExercitoTerrestre();
+            territoriosAtuais.get(destino).addExercitoTerrestre(new Terrestre());
+        }
+    }
+
     public static void selecionaOpcao(Jogador atacante, Jogador defensor){
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
-        System.out.println("Vez do " + atacante.getCor());
-        System.out.println(atacante.getCor() + "Insira o número da opção desejada: \n");
-        System.out.println("1) Combate Terrestre");
-        System.out.println("2) Combate Aéreo");
-        System.out.println("3) Remanejamento de exércitos\n");
-        System.out.print("Opcao: ");
-        opcao = scanner.nextInt();
 
         do {
+            System.out.println("Vez do " + atacante.getCor());
+            System.out.println(atacante.getCor() + "Insira o número da opção desejada: \n");
+            System.out.println("1) Combate Terrestre");
+            System.out.println("2) Combate Aéreo");
+            System.out.println("3) Finalizar combate\n");
+            System.out.print("Opcao: ");
+            opcao = scanner.nextInt();
+
             switch (opcao) {
                 case 1:
                     combateTerrestre(atacante, defensor);
@@ -240,7 +299,6 @@ public class Rodada {
                     break;
 
                 case 3:
-
                     break;
 
                 default:
@@ -249,6 +307,17 @@ public class Rodada {
                     opcao = scanner.nextInt();
                     break;
             }
-        } while (true);
+
+            Mapa.printaMapa();
+        } while (opcao != 3);
+
+        do {
+            System.out.println("Deseja remanejar os exercitos terrestres? Caso nao digite 1");
+            opcao = scanner.nextInt();
+            if (opcao != 1) {
+                remanejarExercito(atacante);
+                Mapa.printaMapa();
+            }
+        } while (opcao != 1);
     }
 }

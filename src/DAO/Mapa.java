@@ -5,39 +5,39 @@
  */
 package DAO;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author kevin
  */
 public class Mapa {
-    private Territorio[][] mapa;
+    private static Mapa instancia = new Mapa();
 
-    public Territorio[][] getMapa() {
-        return mapa;
+    public static Map<Continente, List<Territorio>> getMapa() {
+        return instancia.mapa;
     }
 
-    public void setMapa(Territorio[][] mapa) {
-        this.mapa = mapa;
+    public static void setMapa(Map<Continente, List<Territorio>> mapa) {
+        instancia.mapa = mapa;
     }
+
+    private Map<Continente, List<Territorio>> mapa;
     
-    public static void printaMapa(Territorio[][] mapa){
-        int i,j;
-        for(i=0;i<5;i++){
-            for(j=0;j<8;j++){
-                if(mapa[i][j] == null){
-                    System.out.print("VAZIO \t\t\t\t");
-                }
-                else if("Azul".equals(mapa[i][j].getCor())){
-                    System.out.print("|" + mapa[i][j].getNome() + "[T = " + mapa[i][j].getExercitosTerrestre().size()
-                            + "]" + "[A = " + mapa[i][j].getExercitosAereo().size() + "]" + "[Azul]" + "|" + "\t");
-                }
-                else{
-                    System.out.print("|" + mapa[i][j].getNome() + "[T = " + mapa[i][j].getExercitosTerrestre().size()
-                            + "]" + "[A = " + mapa[i][j].getExercitosAereo().size() + "]" + "[Vermelho]" + "|" + "\t");
-                }
-            }
-            System.out.println("\n\n");
+    public static void printaMapa(){
+        Map<Continente, List<Territorio>> mapa = instancia.mapa;
+        
+        for (Continente continente: mapa.keySet()) {
+            List<Territorio> territorios = mapa.get(continente);
+
+            System.out.println("\nContinente: " + continente.name());
+            for (Territorio territorio: territorios)
+                System.out.println("Territorio[" + territorio.getNome() + "] : " + "[" + territorio.getCor() + "][T="
+                                    + territorio.getExercitosTerrestre().size() + "][A=" + territorio.getExercitosAereo().size() + "]");
+
         }
+
     }
-    
+
 }
