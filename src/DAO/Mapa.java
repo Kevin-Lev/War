@@ -28,10 +28,12 @@ public class Mapa {
                     System.out.print("VAZIO \t\t\t\t");
                 }
                 else if("Azul".equals(mapa[i][j].getCor())){
-                    System.out.print("|" + mapa[i][j].getNome() + "[T = " + mapa[i][j].getTerrestre() + "]" + "[A = " + mapa[i][j].getAereo() + "]" + "[Azul]" + "|" + "\t");
+                    System.out.print("|" + mapa[i][j].getNome() + "[T = " + mapa[i][j].getExercitosTerrestre().size()
+                            + "]" + "[A = " + mapa[i][j].getExercitosAereo().size() + "]" + "[Azul]" + "|" + "\t");
                 }
                 else{
-                    System.out.print("|" + mapa[i][j].getNome() + "[T = " + mapa[i][j].getTerrestre() + "]" + "[A = " + mapa[i][j].getAereo() + "]" + "[Vermelho]" + "|" + "\t");
+                    System.out.print("|" + mapa[i][j].getNome() + "[T = " + mapa[i][j].getExercitosTerrestre().size()
+                            + "]" + "[A = " + mapa[i][j].getExercitosAereo().size() + "]" + "[Vermelho]" + "|" + "\t");
                 }
             }
             System.out.println("\n\n");

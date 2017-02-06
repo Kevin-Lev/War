@@ -20,78 +20,75 @@ public class Rodada {
        List<Territorio> fronteirasAtacantes = new ArrayList<>();
        List<Territorio> territoriosAlvos = new ArrayList<>();
 
-       Scanner scanner = new Scanner(System.in); 
+       Scanner scanner = new Scanner(System.in);
 
-       int i = 0,
-           opcaoEscolhida = 0;
+       int opcaoEscolhida = 0;
        
        for(Territorio t: territoriosAtacantes){
-          if(t.getListaterrestre().size() > 1){
-              territoriosAlvos.put(i, t);
-              i++;
+          if(t.getExercitosTerrestre().size() > 1){
+              territoriosAlvos.add(t);
           } 
        }
        
        System.out.println(atacante.getNome() + " - Selecione o número de um dos seus territórios conquistados: \n");
 
-       for(Integer key: territoriosAlvos.keySet()){
-           System.out.println(key + ")" + territoriosAlvos.get(key).getNome());
+       for(int i = 0; i < territoriosAlvos.size(); i++){
+           System.out.println(i + ")" + territoriosAlvos.get(i).getNome());
        }
 
        System.out.print("Território: ");
-       l = scanner.nextInt();
+       opcaoEscolhida = scanner.nextInt();
 
-       while(territoriosAlvos.get(l)==null){
+       while(territoriosAlvos.get(opcaoEscolhida)==null){
            System.out.print("Selecione um número válido: ");
-           l = scanner.nextInt();
+           opcaoEscolhida = scanner.nextInt();
        }
        
-       Territorio ter_ataque = territoriosAlvos.get(l);
-       PriorityQueue<Integer> combates_ataque = new PriorityQueue<>();
-       
-       
-       for(Territorio t: territoriosAlvos.get(l).getFronteira()){
+       Territorio territoriosAtacante = territoriosAlvos.get(opcaoEscolhida);
+       PriorityQueue<Integer> combatesAtaque = new PriorityQueue<>();
+
+       for(Territorio t: territoriosAlvos.get(opcaoEscolhida).getFronteira()){
           if(t.getCor().equals(defesa.getCor())){ 
-           fronteirasAtacantes.put(i, t);
-           i++;
+           fronteirasAtacantes.add(t);
           }
        }
        
         System.out.println(atacante.getNome() + "- Selecione a fronteira inimiga para atacar!\n");
-        for(Integer key: fronteirasAtacantes.keySet()){
-            System.out.println(key + ")" + " " + fronteirasAtacantes.get(key).getNome());
+        for (int i = 0; i < fronteirasAtacantes.size(); i++) {
+            System.out.println(i + ")" + " " + fronteirasAtacantes.get(i).getNome());
         }
+
         System.out.print("Fronteira: ");
-        l = scanner.nextInt();
-        while(territoriosAlvos.get(l)==null){
+        opcaoEscolhida = scanner.nextInt();
+        while(territoriosAlvos.get(opcaoEscolhida)==null){
            System.out.print("Selecione um número válido: ");
-           l = scanner.nextInt();
+           opcaoEscolhida = scanner.nextInt();
         }
         
-        Territorio ter_defesa = fronteirasAtacantes.get(l);
+        Territorio ter_defesa = fronteirasAtacantes.get(opcaoEscolhida);
         PriorityQueue<Integer> combates_defesa = new PriorityQueue<>();
         
-        for(Terrestre terr: ter_defesa.getListaterrestre()){
+        for(Terrestre terr: ter_defesa.getExercitosTerrestre()){
             combates_defesa.add(terr.Combater());
         }
         
-        System.out.println("Deseja atacar " + ter_defesa.getNome() + " com quantos exércitos de " + ter_ataque + "?\n");
-        System.out.println("Quantidade de exércitos disponíveis em " + ter_ataque.getNome() + " : " + ter_ataque.getListaterrestre() + "\n");
+        System.out.println("Deseja atacar " + ter_defesa.getNome() + " com quantos exércitos de " + territoriosAtacante + "?\n");
+        System.out.println("Quantidade de exércitos disponíveis em " + territoriosAtacante.getNome() + " : " + territoriosAtacante.getExercitosTerrestre() + "\n");
         System.out.print("Exércitos: ");
-        l = scanner.nextInt();
-        while(l>=ter_ataque.getListaterrestre().size()){
+        opcaoEscolhida = scanner.nextInt();
+        while(opcaoEscolhida>=territoriosAtacante.getExercitosTerrestre().size()){
             System.out.print("Valor inválido! Deve permanecer pelo menos 1 exército no território");
-            l = scanner.nextInt();
+            opcaoEscolhida = scanner.nextInt();
         }
-        while(l>3){
+        while(opcaoEscolhida>3){
             System.out.print("Você só pode mover até 3 exércitos para o ataque !!");
-            l = scanner.nextInt();
+            opcaoEscolhida = scanner.nextInt();
         }
         
         int n=1;
-        for(Terrestre terr: ter_ataque.getListaterrestre()){
-            combates_ataque.add(terr.Combater());
-            if(n==l){
+        for(Terrestre terr: territoriosAtacante.getExercitosTerrestre()){
+            combatesAtaque.add(terr.Combater());
+            if(n==opcaoEscolhida){
               break;
             }
             n++;
@@ -99,25 +96,25 @@ public class Rodada {
         
         n=0;
         int perdas_atacante=0, perdas_defesa=0;
-        while(n<=l){
-           if(combates_ataque.peek() < combates_defesa.peek() || combates_ataque.peek() == combates_defesa.peek()){
-               ter_ataque.getListaterrestre().remove(0);
+        while(n<=opcaoEscolhida){
+           if(combatesAtaque.peek() < combates_defesa.peek() || combatesAtaque.peek() == combates_defesa.peek()){
+               territoriosAtacante.getExercitosTerrestre().remove(0);
                perdas_atacante+= 1;
            }
            else{
-               ter_defesa.getListaterrestre().remove(0);
+               ter_defesa.getExercitosTerrestre().remove(0);
                perdas_defesa+= 1;
            }
-           if(ter_defesa.getListaterrestre().size() == 0){
+           if(ter_defesa.getExercitosTerrestre().size() == 0){
                System.out.println("O " + atacante.getNome() + "conquistou o território " + ter_defesa.getNome());
                ter_defesa.setCor(atacante.getCor());
-               atacante.setEx_aereos(atacante.getEx_aereos() + ter_defesa.getListaaereos().size());
-               System.out.println("O " + atacante.getNome() + " recebeu " + ter_defesa.getListaaereos().size() + " exército(s) aéreo(s) " + " do território " + ter_defesa.getNome());
-               ter_defesa.getListaaereos().clear();
+               atacante.setEx_aereos(atacante.getNumExercitosAereo() + ter_defesa.getExercitosAereo().size());
+               System.out.println("O " + atacante.getNome() + " recebeu " + ter_defesa.getExercitosAereo().size() + " exército(s) aéreo(s) " + " do território " + ter_defesa.getNome());
+               ter_defesa.getExercitosAereo().clear();
                break;
            }
         }
-        System.out.println("O " + atacante.getNome() + "perdeu" + perdas_atacante + "exército(s) no " + ter_ataque.getNome()+ "\n");
+        System.out.println("O " + atacante.getNome() + "perdeu" + perdas_atacante + "exército(s) no " + territoriosAtacante.getNome()+ "\n");
         System.out.println("O " + defesa.getNome() + "perdeu" + perdas_defesa + "exército(s) no " + ter_defesa.getNome());
         
     }

@@ -20,45 +20,45 @@ public class Territorio {
     private String nome;
     private String cor;
     private Continente conti;
-    private List<Territorio> listafronteira;
-    private List<Terrestre> listaterrestre;
-    private List<Aereo> listaaereos;
+    private List<Territorio> fronteiras;
+    private List<Terrestre> exercitosTerrestre;
+    private List<Aereo> exercitosAereo;
     
-    public void setTerrestre(Terrestre ter) {
-        this.listaterrestre.add(ter);
+    public void addExercitoTerrestre(Terrestre ter) {
+        this.exercitosTerrestre.add(ter);
     }
 
-    public void setAereos(Aereo aer) {
-        this.listaaereos.add(aer);
+    public void addExercitoAereos(Aereo aer) {
+        this.exercitosAereo.add(aer);
     }
 
-    public List<Terrestre> getListaterrestre() {
-        return listaterrestre;
+    public List<Terrestre> getExercitosTerrestre() {
+        return exercitosTerrestre;
     }
 
-    public List<Aereo> getListaaereos() {
-        return listaaereos;
+    public List<Aereo> getExercitosAereo() {
+        return exercitosAereo;
     }
 
-    public void setListafronteira(List<Territorio> listafronteira) {
-        this.listafronteira = listafronteira;
+    public void setFronteiras(List<Territorio> fronteiras) {
+        this.fronteiras = fronteiras;
     }
 
-    public List<Territorio> getListafronteira() {
-        return listafronteira;
+    public List<Territorio> getFronteiras() {
+        return fronteiras;
     }
     
     public Territorio() {
-        this.listafronteira = new ArrayList<>();
-        this.listaterrestre = new ArrayList<>();
-        this.listaaereos = new ArrayList<>();
+        this.fronteiras = new ArrayList<>();
+        this.exercitosTerrestre = new ArrayList<>();
+        this.exercitosAereo = new ArrayList<>();
     }
 
     public Territorio(String nome , String cor, Continente conti){
         this.nome = nome;
         this.cor  = cor;
         this.conti = conti;
-        this.listafronteira = new ArrayList<>();
+        this.fronteiras = new ArrayList<>();
     }
     
     public String getNome(){
@@ -86,11 +86,11 @@ public class Territorio {
     }
     
     public List<Territorio> getFronteira(){
-        return listafronteira;
+        return fronteiras;
     }
     
     public void setFronteira(Territorio t){ // recebe tipo territorio
-       this.listafronteira.add(t);
+       this.fronteiras.add(t);
     }
     
     

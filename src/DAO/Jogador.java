@@ -12,7 +12,6 @@ import java.util.List;
  *
  * @author Kevin Levrone
  */
-<<<<<<< HEAD
 
 public class Jogador {
     private String nome;
@@ -23,7 +22,7 @@ public class Jogador {
     private int ex_terrestres;
     private int ex_aereos;
 
-    public void setEx_terrestres(int ex_terrestres) {
+    public void setExercitoTerrestre(int ex_terrestres) {
         this.ex_terrestres = ex_terrestres;
     }
 
@@ -31,11 +30,11 @@ public class Jogador {
         this.ex_aereos = ex_aereos;
     }
 
-    public int getEx_terrestres() {
+    public int getNumExercitoTerrestre() {
         return ex_terrestres;
     }
 
-    public int getEx_aereos() {
+    public int getNumExercitosAereo() {
         return ex_aereos;
     }
     

@@ -5,10 +5,7 @@
  */
 package war;
 
-import DAO.Continente;
-import DAO.Jogador;
-import DAO.Mapa;
-import DAO.Territorio;
+import DAO.*;
 
 import java.util.*;
 
@@ -400,15 +397,15 @@ public class War {
             i++;
             if(i>=17){
               ter.setCor(player2.getCor());
-              ter.setTerrestre(1);
-              ter.setAereo(1);
+              ter.addExercitoTerrestre(new Terrestre());
+              ter.addExercitoAereos(new Aereo());
               player2.setTerritorios(ter);
               
             }
             else{
               ter.setCor(player1.getCor());
-              ter.setTerrestre(1);
-              ter.setAereo(1);
+              ter.addExercitoTerrestre(new Terrestre());
+              ter.addExercitoAereos(new Aereo());
               player1.setTerritorios(ter);
             }
         }
@@ -424,60 +421,63 @@ public class War {
         // Serve apenas para o recebimento dos novos exércitos e para distribuí-los 
         //nos territórios
         int k=0, l=0;
-        Map<Integer, String> j1_territorios = new HashMap(); 
+        Map<Integer, String> j1_territorios = new HashMap();
         Map<Integer, String> adv_territorios = new HashMap(); 
-        List<Territorio> ter_j1 = player1.getTerritorios(), ter_adv = player2.getTerritorios();
+        List<Territorio> territoriosJogador1 = player1.getTerritorios(), territoriosJogador2 = player2.getTerritorios();
         Scanner scanner = new Scanner(System.in); 
         
-        for(Territorio t: ter_j1){
+        for(Territorio t: territoriosJogador1){
             j1_territorios.put(k, t.getNome());
             k++;
         }
         
-        for(Territorio t: ter_adv){
+        for(Territorio t: territoriosJogador2){
             adv_territorios.put(k, t.getNome());
             k++;
         }
                 
-        player1.setEx_terrestres(player1.getTerritorios().size()/2);
+        player1.setExercitoTerrestre(player1.getTerritorios().size()/2);
         player1.setEx_aereos(player1.getTerritorios().size()/3);
-        player2.setEx_terrestres(player2.getTerritorios().size()/2);
+        player2.setExercitoTerrestre(player2.getTerritorios().size()/2);
         player2.setEx_aereos(player2.getTerritorios().size()/3);
-        
-        System.out.println("Jogador 1 - Distribua seus exércitos terrestres!\n");
 
+        int playerTurn = 0;
         do {
-            if ((playerTurn / 2) == 0) {
-                while (player1.getEx_terrestres() > 0) {
-                    System.out.println("Exércitos disponíveis: " + player1.getEx_terrestres() + "\n");
-                    System.out.println("Selecione o número do território desejado para distribuir um exército: \n");
-                    for (k = 0; k < ter_j1.size(); k++) {
-                        System.out.println(k + ")" + " " + ter_j1.get(k).getNome() + " (" + ter_j1.get(k).getTerrestre() + " " + "exército(s)" + ")");
-                    }
-                    System.out.print("\nTerritorio: ");
-                    l = scanner.nextInt();
-                    ter_j1.get(l).setTerrestre((ter_j1.get(l).getTerrestre() + 1));
-                    System.out.println(ter_j1.get(l).getNome() + " " + "recebeu um exército a mais!");
-                    player1.setEx_terrestres((player1.getEx_terrestres() - 1));
-                    System.out.println("\n");
-                }
-            }
+            if ((playerTurn % 2) == 0) {
+                //distrbuirExercitos(player1, territoriosJogador1, scanner);
+                Distribuicao.distribuiTerrestre(player1);
+                Distribuicao.distribuiAereo(player1);
 
+            }
             else {
-                System.out.println("Exércitos disponíveis: " + player2.getEx_terrestres() + "\n");
-                System.out.println("Selecione o número do território desejado para distribuir um exército: \n");
-                for (k = 0; k < ter_j1.size(); k++) {
-                    System.out.println(k + ")" + " " + ter_j1.get(k).getNome() + " (" + ter_j1.get(k).getTerrestre() + " " + "exército(s)" + ")");
-                }
-                System.out.print("\nTerritorio: ");
-                l = scanner.nextInt();
-                ter_j1.get(l).setTerrestre((ter_j1.get(l).getTerrestre() + 1));
-                System.out.println(ter_j1.get(l).getNome() + " " + "recebeu um exército a mais!");
-                player1.setEx_terrestres((player1.getEx_terrestres() - 1));
-                System.out.println("\n");
+                //distrbuirExercitos(player2, territoriosJogador2, scanner);
+                Distribuicao.distribuiTerrestre(player2);
+                Distribuicao.distribuiAereo(player2);
             }
-
             playerTurn++;
         } while ((player1.getContinentes()) < 2 && (player2.getContinentes() < 2));
-    }  
+    }
+
+//    private static void distrbuirExercitos(Jogador player, List<Territorio> territoriosJogador, Scanner scanner) {
+//        distrubuirExercitosTerrestre(player, territoriosJogador, scanner);
+//    }
+//
+//    private static void distrubuirExercitosTerrestre(Jogador player, List<Territorio> territoriosJogador, Scanner scanner) {
+//        int territorioEscolhido;
+//
+//        while (player.getNumExercitoTerrestre() > 0) {
+//            System.out.println("Exércitos disponíveis: " + player.getNumExercitoTerrestre() + "\n");
+//            System.out.println("Selecione o número do território desejado para distribuir um exército: \n");
+//            for (int k = 0; k < territoriosJogador.size(); k++) {
+//                System.out.println(k + ")" + " " + territoriosJogador.get(k).getNome() + " (" +
+//                        territoriosJogador.get(k).getExercitosTerrestre().size() + " " + "exército(s)" + ")");
+//            }
+//            System.out.print("\nTerritorio: ");
+//            territorioEscolhido = scanner.nextInt();
+//            territoriosJogador.get(territorioEscolhido).addExercitoTerrestre(new Terrestre());
+//            System.out.println(territoriosJogador.get(territorioEscolhido).getNome() + " " + "recebeu um exército a mais!");
+//            player.setExercitoTerrestre((player.getNumExercitoTerrestre() - 1));
+//            System.out.println("\n");
+//        }
+//    }
 }   
