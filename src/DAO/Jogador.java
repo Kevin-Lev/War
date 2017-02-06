@@ -12,17 +12,73 @@ import java.util.List;
  *
  * @author Kevin Levrone
  */
-<<<<<<< HEAD
-
 public class Jogador {
     private String nome;
-    private int turno;
+    private int num;
     private String cor;
     private List<Territorio> territorios;
     private int continentes;
     private int ex_terrestres;
     private int ex_aereos;
+    private int ter_amenorte;
+    private int ter_amesul;
+    private int ter_afr;
+    private int ter_euro;
+    private int ter_asia;
+    private int ter_ocean;
 
+    public int getTer_amenorte() {
+        return ter_amenorte;
+    }
+
+    public int getTer_amesul() {
+        return ter_amesul;
+    }
+
+    public int getTer_afr() {
+        return ter_afr;
+    }
+
+    public int getTer_euro() {
+        return ter_euro;
+    }
+
+    public int getTer_asia() {
+        return ter_asia;
+    }
+
+    public int getTer_ocean() {
+        return ter_ocean;
+    }
+
+    public void setTerritorios(List<Territorio> territorios) {
+        this.territorios = territorios;
+    }
+
+    public void setTer_amenorte(int ter_amenorte) {
+        this.ter_amenorte = ter_amenorte;
+    }
+
+    public void setTer_amesul(int ter_amesul) {
+        this.ter_amesul = ter_amesul;
+    }
+
+    public void setTer_afr(int ter_afr) {
+        this.ter_afr = ter_afr;
+    }
+
+    public void setTer_euro(int ter_euro) {
+        this.ter_euro = ter_euro;
+    }
+
+    public void setTer_asia(int ter_asia) {
+        this.ter_asia = ter_asia;
+    }
+
+    public void setTer_ocean(int ter_ocean) {
+        this.ter_ocean = ter_ocean;
+    }
+       
     public void setEx_terrestres(int ex_terrestres) {
         this.ex_terrestres = ex_terrestres;
     }
@@ -64,16 +120,12 @@ public class Jogador {
     public Jogador(){    
         this.territorios = new ArrayList();
     }
-
-    public Jogador(String nome, int turno, String cor, List<Territorio> territorios){
+    
+    public Jogador(String nome, int num, String cor, List<Territorio> territorios){
         this.nome = nome;
-        this.turno = turno;
+        this.num = num;
         this.cor = cor;
         this.territorios = territorios;
-    }
-
-    public Jogador(int turno) {
-        this.turno = turno;
     }
     
     public String getNome(){
@@ -83,13 +135,13 @@ public class Jogador {
     public void setNome(String nome){
         this.nome = nome;
     }
-
-    public int getTurno(){
-        return this.turno;
+    
+    public int getNum(){
+        return this.num;
     }
     
-    public void setTurno(int turno){
-        this.turno = turno;
+    public void setNum(int num){
+        this.num = num;
     }
     
     public String getCor(){
