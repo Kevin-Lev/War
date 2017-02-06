@@ -5,8 +5,11 @@
  */
 package DAO;
 
+import DAO.Continente.continentes;
 import java.util.ArrayList;
 import java.util.List;
+import war.Aereo;
+import war.Terrestre;
 
 /**
  *
@@ -16,36 +19,46 @@ public class Territorio {
     
     private String nome;
     private String cor;
-    private Continente continente;
+    private continentes conti;
     private List<Territorio> listafronteira;
-    private int terrestre;
-    private int aereo;
-
-    public void setTerrestre(int terrestre) {
-        this.terrestre = terrestre;
+    private List<Terrestre> listaterrestre;
+    private List<Aereo> listaaereos;
+    
+    public void setTerrestre(Terrestre ter) {
+        this.listaterrestre.add(ter);
     }
 
-    public void setAereo(int aereo) {
-        this.aereo = aereo;
+    public void setAereos(Aereo aer) {
+        this.listaaereos.add(aer);
     }
 
-    public int getTerrestre() {
-        return terrestre;
+    public List<Terrestre> getListaterrestre() {
+        return listaterrestre;
     }
 
-    public int getAereo() {
-        return aereo;
+    public List<Aereo> getListaaereos() {
+        return listaaereos;
     }
 
+    public void setListafronteira(List<Territorio> listafronteira) {
+        this.listafronteira = listafronteira;
+    }
+
+    public List<Territorio> getListafronteira() {
+        return listafronteira;
+    }
+    
     public Territorio() {
         this.listafronteira = new ArrayList<>();
+        this.listaterrestre = new ArrayList<>();
+        this.listaaereos = new ArrayList<>();
     }
 
-    public Territorio(String nome , String cor, Continente continente){
+    public Territorio(String nome , String cor, continentes conti){
         this.nome = nome;
         this.cor  = cor;
-        this.continente = continente;
-        this.listafronteira = new ArrayList<Territorio>();
+        this.conti = conti;
+        this.listafronteira = new ArrayList<>();
     }
     
     public String getNome(){
@@ -63,13 +76,13 @@ public class Territorio {
     public void setCor(String cor){
         this.cor = cor;
     }
-
-    public Continente getContinente(){
-        return this.continente;
+    
+    public continentes getContinente(){
+        return this.conti;
     }
     
-    public void setContinente(Continente continente){
-        this.continente = continente;
+    public void setContinente(continentes conti){
+        this.conti = conti;
     }
     
     public List<Territorio> getFronteira(){
@@ -79,5 +92,6 @@ public class Territorio {
     public void setFronteira(Territorio t){ // recebe tipo territorio
        this.listafronteira.add(t);
     }
+    
     
 }
