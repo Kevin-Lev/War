@@ -16,14 +16,14 @@ import java.util.List;
  * @author Kevin Levrone
  */
 public class Territorio {
-    
+
     private String nome;
     private String cor;
     private Continente conti;
     private List<Territorio> fronteiras;
     private List<Terrestre> exercitosTerrestre;
     private List<Aereo> exercitosAereo;
-    
+
     public void addExercitoTerrestre(Terrestre ter) {
         this.exercitosTerrestre.add(ter);
     }
@@ -54,10 +54,6 @@ public class Territorio {
         this.fronteiras = fronteiras;
     }
 
-    public List<Territorio> getFronteiras() {
-        return fronteiras;
-    }
-    
     public Territorio() {
         this.fronteiras = new ArrayList<>();
         this.exercitosTerrestre = new ArrayList<>();
@@ -70,38 +66,37 @@ public class Territorio {
         this.conti = conti;
         this.fronteiras = new ArrayList<>();
     }
-    
+
     public String getNome(){
         return this.nome;
     }
-    
+
     public void setNome(String nome){
         this.nome = nome;
     }
-    
+
     public String getCor(){
         return this.cor;
     }
-    
+
     public void setCor(String cor){
         this.cor = cor;
     }
-    
+
     public Continente getContinente(){
         return this.conti;
     }
-    
+
     public void setContinente(Continente conti){
         this.conti = conti;
     }
-    
-    public List<Territorio> getFronteira(){
+
+    public List<Territorio> getFronteiras(){
         return fronteiras;
     }
-    
-    public void setFronteira(Territorio t){ // recebe tipo territorio
-       this.fronteiras.add(t);
+
+    public void addFronteira(Territorio t){ // recebe tipo territorio
+        this.fronteiras.add(t);
     }
-    
     
 }

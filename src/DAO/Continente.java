@@ -5,6 +5,9 @@
  */
 package DAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Kevin Levrone
@@ -13,15 +16,25 @@ package DAO;
 public enum Continente {
     AFRICA, AMERICA_DO_NORTE, AMERICA_DO_SUL, ASIA, EUROPA, OCEANIA;
 
-    private int num_territorios;
+    private List<Continente> continenteVizinhos = new ArrayList<>();
 
-    public void setNumTerritorios(int num_territorios) {
-                                                      this.num_territorios = num_territorios;
-                                                                                             }
+    public List<Continente> getContinenteVizinhos() {
+        return continenteVizinhos;
+    }
 
-    public int getNum_territorios() {
-                                  return num_territorios;
-                                                         }
+    public boolean saoVizinhos (Continente continente) {
+        return !(this.continenteVizinhos.indexOf(continente) == -1);
+    }
+
+    private int numTerritorios;
+
+    public void setNumTerritorios(int numTerritorios) {
+        this.numTerritorios = numTerritorios;
+    }
+
+    public int getNumTerritorios() {
+        return numTerritorios;
+    }
 
 }
 

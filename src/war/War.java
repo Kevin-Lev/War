@@ -23,6 +23,34 @@ public class War {
         Continente.EUROPA.setNumTerritorios(5);
         Continente.OCEANIA.setNumTerritorios(4);
 
+        Continente.AFRICA.getContinenteVizinhos().add(Continente.AMERICA_DO_NORTE);
+        Continente.AFRICA.getContinenteVizinhos().add(Continente.EUROPA);
+        Continente.AFRICA.getContinenteVizinhos().add(Continente.OCEANIA);
+        Continente.AFRICA.getContinenteVizinhos().add(Continente.ASIA);
+
+        Continente.AMERICA_DO_NORTE.getContinenteVizinhos().add(Continente.AMERICA_DO_SUL);
+        Continente.AMERICA_DO_NORTE.getContinenteVizinhos().add(Continente.AFRICA);
+        Continente.AMERICA_DO_NORTE.getContinenteVizinhos().add(Continente.ASIA);
+        Continente.AMERICA_DO_NORTE.getContinenteVizinhos().add(Continente.EUROPA);
+
+        Continente.AMERICA_DO_SUL.getContinenteVizinhos().add(Continente.AMERICA_DO_NORTE);
+        Continente.AMERICA_DO_SUL.getContinenteVizinhos().add(Continente.ASIA);
+        Continente.AMERICA_DO_SUL.getContinenteVizinhos().add(Continente.OCEANIA);
+
+        Continente.ASIA.getContinenteVizinhos().add(Continente.AMERICA_DO_NORTE);
+        Continente.ASIA.getContinenteVizinhos().add(Continente.AMERICA_DO_SUL);
+        Continente.ASIA.getContinenteVizinhos().add(Continente.EUROPA);
+        Continente.ASIA.getContinenteVizinhos().add(Continente.AFRICA);
+        Continente.ASIA.getContinenteVizinhos().add(Continente.OCEANIA);
+
+        Continente.EUROPA.getContinenteVizinhos().add(Continente.AMERICA_DO_NORTE);
+        Continente.EUROPA.getContinenteVizinhos().add(Continente.AFRICA);
+        Continente.EUROPA.getContinenteVizinhos().add(Continente.ASIA);
+
+        Continente.OCEANIA.getContinenteVizinhos().add(Continente.ASIA);
+        Continente.OCEANIA.getContinenteVizinhos().add(Continente.AMERICA_DO_SUL);
+        Continente.OCEANIA.getContinenteVizinhos().add(Continente.AFRICA);
+
         Territorio alasca = new Territorio();
         alasca.setNome("Alasca");
         alasca.setContinente(Continente.AMERICA_DO_NORTE);
@@ -201,136 +229,136 @@ public class War {
         //////////////// Definição das fronteiras /////////////////////////////////////
 // América do Norte
 
-        alasca.setFronteira(vancouver);
-        alasca.setFronteira(vladivostok);
+        alasca.addFronteira(vancouver);
+        alasca.addFronteira(vladivostok);
 
-        vancouver.setFronteira(alasca);
-        vancouver.setFronteira(california);
-        vancouver.setFronteira(groenlandia);
+        vancouver.addFronteira(alasca);
+        vancouver.addFronteira(california);
+        vancouver.addFronteira(groenlandia);
 
-        groenlandia.setFronteira(vancouver);
-        groenlandia.setFronteira(otawa);
-        groenlandia.setFronteira(inglaterra);
+        groenlandia.addFronteira(vancouver);
+        groenlandia.addFronteira(otawa);
+        groenlandia.addFronteira(inglaterra);
 
-        california.setFronteira(vancouver);
-        california.setFronteira(otawa);
-        california.setFronteira(mexico);
+        california.addFronteira(vancouver);
+        california.addFronteira(otawa);
+        california.addFronteira(mexico);
 
-        otawa.setFronteira(california);
-        otawa.setFronteira(groenlandia);
-        otawa.setFronteira(novayork);
+        otawa.addFronteira(california);
+        otawa.addFronteira(groenlandia);
+        otawa.addFronteira(novayork);
 
-        mexico.setFronteira(california);
-        mexico.setFronteira(novayork);
-        mexico.setFronteira(colombia);
+        mexico.addFronteira(california);
+        mexico.addFronteira(novayork);
+        mexico.addFronteira(colombia);
 
 // América do Sul
 
-        novayork.setFronteira(otawa);
-        novayork.setFronteira(mexico);
-        novayork.setFronteira(nigeria);
+        novayork.addFronteira(otawa);
+        novayork.addFronteira(mexico);
+        novayork.addFronteira(nigeria);
 
-        chile.setFronteira(colombia);
-        chile.setFronteira(argentina);
-        chile.setFronteira(japao);
+        chile.addFronteira(colombia);
+        chile.addFronteira(argentina);
+        chile.addFronteira(japao);
 
-        colombia.setFronteira(mexico);
-        colombia.setFronteira(brasil);
-        colombia.setFronteira(chile);
+        colombia.addFronteira(mexico);
+        colombia.addFronteira(brasil);
+        colombia.addFronteira(chile);
 
-        argentina.setFronteira(chile);
-        argentina.setFronteira(brasil);
-        argentina.setFronteira(novaGuine);
+        argentina.addFronteira(chile);
+        argentina.addFronteira(brasil);
+        argentina.addFronteira(novaGuine);
 
 //Europa
 
-        inglaterra.setFronteira(groenlandia);
-        inglaterra.setFronteira(italia);
+        inglaterra.addFronteira(groenlandia);
+        inglaterra.addFronteira(italia);
 
-        italia.setFronteira(inglaterra);
-        italia.setFronteira(alemanha);
-        italia.setFronteira(suecia);
+        italia.addFronteira(inglaterra);
+        italia.addFronteira(alemanha);
+        italia.addFronteira(suecia);
 
-        alemanha.setFronteira(italia);
-        alemanha.setFronteira(moscou);
-        alemanha.setFronteira(egito);
+        alemanha.addFronteira(italia);
+        alemanha.addFronteira(moscou);
+        alemanha.addFronteira(egito);
 
-        suecia.setFronteira(italia);
-        suecia.setFronteira(moscou);
+        suecia.addFronteira(italia);
+        suecia.addFronteira(moscou);
 
-        moscou.setFronteira(suecia);
-        moscou.setFronteira(omsk);
-        moscou.setFronteira(orienteMedio);
-        moscou.setFronteira(alemanha);
+        moscou.addFronteira(suecia);
+        moscou.addFronteira(omsk);
+        moscou.addFronteira(orienteMedio);
+        moscou.addFronteira(alemanha);
 
 // África
 
-        egito.setFronteira(alemanha);
-        egito.setFronteira(nigeria);
-        egito.setFronteira(sudao);
-        egito.setFronteira(orienteMedio);
+        egito.addFronteira(alemanha);
+        egito.addFronteira(nigeria);
+        egito.addFronteira(sudao);
+        egito.addFronteira(orienteMedio);
 
-        congo.setFronteira(otawa);
-        congo.setFronteira(mexico);
+        congo.addFronteira(otawa);
+        congo.addFronteira(mexico);
 
-        sudao.setFronteira(egito);
-        sudao.setFronteira(sumatra);
-        sudao.setFronteira(congo);
-        sudao.setFronteira(madagascar);
+        sudao.addFronteira(egito);
+        sudao.addFronteira(sumatra);
+        sudao.addFronteira(congo);
+        sudao.addFronteira(madagascar);
 
-        africaDoSul.setFronteira(congo);
-        africaDoSul.setFronteira(madagascar);
+        africaDoSul.addFronteira(congo);
+        africaDoSul.addFronteira(madagascar);
 
-        madagascar.setFronteira(sudao);
-        madagascar.setFronteira(africaDoSul);
+        madagascar.addFronteira(sudao);
+        madagascar.addFronteira(africaDoSul);
 
 // Ásia
 
-        vladivostok.setFronteira(alasca);
-        vladivostok.setFronteira(siberia);
+        vladivostok.addFronteira(alasca);
+        vladivostok.addFronteira(siberia);
 
-        omsk.setFronteira(moscou);
-        omsk.setFronteira(siberia);
-        omsk.setFronteira(india);
+        omsk.addFronteira(moscou);
+        omsk.addFronteira(siberia);
+        omsk.addFronteira(india);
 
-        siberia.setFronteira(vladivostok);
-        siberia.setFronteira(omsk);
-        siberia.setFronteira(chile);
+        siberia.addFronteira(vladivostok);
+        siberia.addFronteira(omsk);
+        siberia.addFronteira(chile);
 
-        orienteMedio.setFronteira(moscou);
-        orienteMedio.setFronteira(egito);
-        orienteMedio.setFronteira(india);
-        orienteMedio.setFronteira(sumatra);
+        orienteMedio.addFronteira(moscou);
+        orienteMedio.addFronteira(egito);
+        orienteMedio.addFronteira(india);
+        orienteMedio.addFronteira(sumatra);
 
-        india.setFronteira(omsk);
-        india.setFronteira(orienteMedio);
-        india.setFronteira(chile);
-        india.setFronteira(borneu);
+        india.addFronteira(omsk);
+        india.addFronteira(orienteMedio);
+        india.addFronteira(chile);
+        india.addFronteira(borneu);
 
-        chile.setFronteira(siberia);
-        chile.setFronteira(india);
-        chile.setFronteira(japao);
+        chile.addFronteira(siberia);
+        chile.addFronteira(india);
+        chile.addFronteira(japao);
 
-        japao.setFronteira(borneu);
-        japao.setFronteira(novaGuine);
-        japao.setFronteira(chile);
+        japao.addFronteira(borneu);
+        japao.addFronteira(novaGuine);
+        japao.addFronteira(chile);
 
 // Oceania
 
-        sumatra.setFronteira(sudao);
-        sumatra.setFronteira(borneu);
-        sumatra.setFronteira(orienteMedio);
+        sumatra.addFronteira(sudao);
+        sumatra.addFronteira(borneu);
+        sumatra.addFronteira(orienteMedio);
 
-        borneu.setFronteira(india);
-        borneu.setFronteira(sumatra);
-        borneu.setFronteira(japao);
-        borneu.setFronteira(australia);
+        borneu.addFronteira(india);
+        borneu.addFronteira(sumatra);
+        borneu.addFronteira(japao);
+        borneu.addFronteira(australia);
 
-        australia.setFronteira(novaGuine);
+        australia.addFronteira(novaGuine);
 
-        novaGuine.setFronteira(japao);
-        australia.setFronteira(australia);
-        australia.setFronteira(argentina);
+        novaGuine.addFronteira(japao);
+        australia.addFronteira(australia);
+        australia.addFronteira(argentina);
 
         /////////////////////// Inicialização//////////////////////////////////////////
 

@@ -47,7 +47,7 @@ public class Rodada {
        Territorio territoriosAtacante = territoriosAlvos.get(opcaoEscolhida);
        PriorityQueue<Integer> combatesAtaque = new PriorityQueue<>();
 
-       for(Territorio t: territoriosAlvos.get(opcaoEscolhida).getFronteira()){
+       for(Territorio t: territoriosAlvos.get(opcaoEscolhida).getFronteiras()){
           if(t.getCor().equals(defensor.getCor())){
            fronteirasAtacantes.add(t);
           }
@@ -127,10 +127,94 @@ public class Rodada {
     }
 
     private static void combateAereo(Jogador atacante, Jogador defensor) {
-        List<Territorio> territoriosAtacante = atacante.getTerritorios();
+        List<Territorio> territoriosAlvosAereo = new ArrayList<>();
+        List<Territorio> terriotoriosAtacante = atacante.getTerritorios();
+        List<Territorio> territoriosComAereo = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
 
+        for (Territorio territorio: terriotoriosAtacante) {
+            if (!(territorio.getExercitosAereo().isEmpty()))
+                territoriosComAereo.add(territorio);
+
+            for (Territorio fronteira: territorio.getFronteiras()) {
+                if ((!fronteira.getExercitosAereo().isEmpty() && (territoriosAlvosAereo.indexOf(fronteira) == -1) &&
+                        (fronteira.getExercitosTerrestre().size() >= 4))) {
+                    territoriosAlvosAereo.add(fronteira);
+                }
+
+            }
+        }
+
+        System.out.println(atacante.getCor() + "- Selecione a fronteira inimiga para atacar!\n");
+        for (int i = 0; i < territoriosAlvosAereo.size(); i++) {
+            System.out.println(i + ")" + " " + territoriosAlvosAereo.get(i).getNome());
+        }
+
+        System.out.print("Fronteira: ");
+        int opcaoEscolhida = scanner.nextInt();
+        while(territoriosAlvosAereo.get(opcaoEscolhida)==null){
+            System.out.print("Selecione um número válido: ");
+            opcaoEscolhida = scanner.nextInt();
+        }
+
+        Territorio territorioEscolhido = territoriosAlvosAereo.get(opcaoEscolhida);
+        int exercitoAereoRetirado = 0;
+
+        System.out.println("Selecione o territorio que possui Exercito Aereo");
+        for (int i = 0; i < territoriosComAereo.size(); i++) {
+            System.out.println(i + ") " + territoriosComAereo.get(i).getNome() + " : Possui " +
+                    territoriosComAereo.get(i).getExercitosAereo().size() + " exercito(s) aereos");
+        }
+
+        opcaoEscolhida = scanner.nextInt();
+
+        while ((opcaoEscolhida >= territoriosComAereo.size()) || (opcaoEscolhida < 0)) {
+            System.out.println("Opcao invalida! Digite novamente um novo valor: ");
+            opcaoEscolhida = scanner.nextInt();
+        }
+
+        territoriosComAereo.get(opcaoEscolhida).removeExercitoAereos();
+        exercitoAereoRetirado++;
+
+        Territorio territorioReferencia = territoriosComAereo.get(opcaoEscolhida);
+        List<Territorio> territorioParticipantes = new ArrayList<>();
+
+        gerarContinentesParticipantes(territoriosComAereo, territorioReferencia, territorioParticipantes);
+
+        do {
+            System.out.println("Digite outro territorio que deseja unir o Exercito aereo. Caso nao queria mais, digite 99");
+            for (int i = 0; i < territorioParticipantes.size(); i++) {
+                System.out.println(i + ") " + territorioParticipantes.get(i).getNome() + " : possui " \
+                        + territorioParticipantes.get(i).getExercitosAereo().size() + " exercitos aereos");
+            }
+
+            opcaoEscolhida = scanner.nextInt();
+
+            while ((opcaoEscolhida >= territorioParticipantes.size()) || (opcaoEscolhida < 0)) {
+                System.out.println("Opcao invalida! Digite novamente um novo valor: ");
+                opcaoEscolhida = scanner.nextInt();
+            }
+
+            territoriosComAereo.get(opcaoEscolhida).removeExercitoAereos();
+            exercitoAereoRetirado++;
+
+        } while ((opcaoEscolhida != 99) || (exercitoAereoRetirado < 3));
+
+        for (int i = 0; i < exercitoAereoRetirado; i++) {
+            
+        }
+
+
+    }
+
+    private static void gerarContinentesParticipantes(List<Territorio> territoriosComAereo, Territorio territorioReferencia, List<Territorio> territorioParticipantes) {
+        for (Territorio territorio: territoriosComAereo) {
+            if ((territorioReferencia.getContinente().saoVizinhos(territorio.getContinente()) ||
+                    (territorioReferencia.getContinente() == territorio.getContinente())) &&
+                            !(territorio.getExercitosAereo().isEmpty()))
+                territorioParticipantes.add(territorio);
+        }
     }
 
     public static void selecionaOpcao(Jogador atacante, Jogador defensor){
